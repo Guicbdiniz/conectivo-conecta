@@ -4,16 +4,16 @@ Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.
 
 ## Alunos integrantes da equipe
 
-Arthur Gramiscelli Branco
-Guilherme Campos Barata Diniz
-Leonardo Antunes Barreto Noman
-Lucas Guilherme Verdan Moreira
-Weber Marques De Oliveira
+* Arthur Gramiscelli Branco
+* Guilherme Campos Barata Diniz
+* Leonardo Antunes Barreto Noman
+* Lucas Guilherme Verdan Moreira
+* Weber Marques De Oliveira
 
 ## Professores responsáveis
 
-Ivre Marjorie Ribeiro Machado
-Soraia Lúcia Da Silva
+* Ivre Marjorie Ribeiro Machado
+* Soraia Lúcia Da Silva
 
 ## Instruções de utilização
 
