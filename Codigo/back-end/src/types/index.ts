@@ -1,7 +1,7 @@
 /**
  * Trabalhor model's interface.
  */
-interface Trabalhador {
+export interface Trabalhador {
 	cpf: Number
 	senha: String
 	nomeCompleto: String
