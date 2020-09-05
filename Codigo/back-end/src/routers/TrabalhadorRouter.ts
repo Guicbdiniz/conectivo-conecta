@@ -1,7 +1,8 @@
 import { Router } from 'express'
-import { getView } from '../controllers/TrabaladorController.ts
+import { create } from '../controllers/TrabalhadorController'
 
 const router = Router()
-router.post('/create/', )
+
+router.post('/create/', create)
 
 export default router
