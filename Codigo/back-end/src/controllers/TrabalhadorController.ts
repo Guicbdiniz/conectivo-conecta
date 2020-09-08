@@ -1,66 +1,74 @@
 import { Request, Response } from 'express'
-import { createTrabalhador } from '../models/TrabalhadorModel'
-import { Trabalhador } from '../types'
+import {
+	insert,
+	insertExperienciaProfissional
+} from '../models/TrabalhadorModel'
+import { Trabalhador, ExperienciaProfissional } from '../types/TrabalhadorTypes'
 import bcrypt from 'bcrypt'
-import { PassThrough } from 'stream'
-import { isBuffer } from 'util'
+import { createBodyIsValid } from '../validators/TrabalhadorValidators'
 
+/**
+ * Create worker Controller.
+ *
+ * The request body must contain all the woker's attribute, along with an array with the working experience.
+ */
 export async function create(req: Request, res: Response) {
-	try {
-		const {
-			cpf,
-			senha,
-			nomeCompleto,
-			nomeCompletoPai,
-			nomeCompletoMae,
-			numeroDeRG,
-			dataDeNascimento,
-			localDeNascimento,
-			estadoCivil,
-			temFilhos,
-			telefoneDeContato,
-			email,
-			endereco,
-			escolaridade,
-			experienciasProfissionais,
-			objetivoProfissional,
-			resumoProfissional
-		} = req.body
-
-		const hashedPassword = await bcrypt.hash(senha, 10)
-
-		const newTrabalhador: Trabalhador = {
-			cpf: parseInt(cpf),
-			senha: hashedPassword,
-			nomeCompleto: nomeCompleto,
-			nomeCompletoPai: nomeCompletoPai,
-			nomeCompletoMae: nomeCompletoMae,
-			numeroDeRG: parseInt(numeroDeRG),
-			dataDeNascimento: dataDeNascimento,
-			localDeNascimento: localDeNascimento,
-			estadoCivil: estadoCivil,
-			temFilhos: temFilhos === 'true',
-			telefoneDeContato: telefoneDeContato,
-			email: email,
-			endereco: endereco,
-			escolaridade: escolaridade,
-			experienciasProfissionais: experienciasProfissionais,
-			objetivoProfissional: objetivoProfissional,
-			resumoProfissional: resumoProfissional
-		}
-
-		createTrabalhador(newTrabalhador, function (err: any, data: any) {
-			if (err) {
-				res.status(500).send({
-					message: err
-				})
-			} else {
-				res.send(data)
-			}
+	if (createBodyIsValid(req.body)) {
+		res.status(400).json({
+			message: 'Error: Incorrect request body.'
 		})
-	} catch (err) {
-		res.status(500).send({
-			message: err
+	}
+
+	const newTrabalhador: Trabalhador = { ...req.body.trabalhador }
+	const experienciasProfissionais: ExperienciaProfissional[] =
+		req.body.experienciasProfissionais
+
+	const hashedPassword = await bcrypt.hash(newTrabalhador.senha, 10)
+	newTrabalhador.senha = hashedPassword
+
+	insert(newTrabalhador, function (err: any, data: any) {
+		if (err) {
+			res.status(500).json({
+				message: `Error: ${err}`
+			})
+		} else {
+			try {
+				createMultipleExperienciasProfissionais(
+					experienciasProfissionais,
+					newTrabalhador.cpf
+				)
+
+				res.status(200).json({
+					message: 'Trabalhador created!',
+					trabalhador: newTrabalhador,
+					experienciasProfissionais: experienciasProfissionais
+				})
+			} catch (err) {
+				res.status(500).json({
+					message: `Error: ${err}`
+				})
+			}
+		}
+	})
+}
+
+/**
+ * Call multiple insertions of ExperienciasProfissionais, returning any errors.
+ */
+function createMultipleExperienciasProfissionais(
+	experienciasProfissionais: ExperienciaProfissional[],
+	cpf: Number
+): void {
+	for (const experiencia of experienciasProfissionais) {
+		insertExperienciaProfissional(experiencia, cpf, function (
+			err: any,
+			data: any
+		) {
+			if (err) {
+				throw err
+			} else {
+				return
+			}
 		})
 	}
 }
