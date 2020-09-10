@@ -29,7 +29,7 @@ export function insertExperienciaProfissional(
 	callback: Function
 ) {
 	sql.query(
-		`INSERT INSERT INTO \`experienciaprofissional\` (\`cargo\`, \`local\`, \`trabalhador\`) VALUES ('${newExperienciaProfissional.cargo}', '${newExperienciaProfissional.local}', '${cpf}');`,
+		`INSERT INTO \`experienciaprofissional\` (\`cargo\`, \`local\`, \`trabalhador\`) VALUES ('${newExperienciaProfissional.cargo}', '${newExperienciaProfissional.local}', '${cpf}');`,
 		function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
