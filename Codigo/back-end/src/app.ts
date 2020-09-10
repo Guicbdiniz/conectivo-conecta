@@ -1,3 +1,8 @@
+import { config } from 'dotenv'
+
+// Add environment variables
+config()
+
 import express from 'express'
 import bodyParser from 'body-parser'
 
