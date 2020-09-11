@@ -17,6 +17,7 @@ export async function create(req: Request, res: Response) {
 		res.status(400).json({
 			message: 'Error: Incorrect request body.'
 		})
+		return
 	}
 
 	const newTrabalhador: Trabalhador = { ...req.body.trabalhador }
