@@ -26,49 +26,38 @@ export async function create(req: Request, res: Response) {
 	const hashedPassword = await bcrypt.hash(newTrabalhador.senha, 10)
 	newTrabalhador.senha = hashedPassword
 
-	insert(newTrabalhador, function (err: any, data: any) {
-		if (err) {
-			res.status(500).json({
-				message: `Error: ${err}`
-			})
-		} else {
-			try {
-				createMultipleExperienciasProfissionais(
-					experienciasProfissionais,
-					newTrabalhador.cpf
-				)
+	try {
+		await insert(newTrabalhador)
 
-				res.status(200).json({
-					message: 'Trabalhador created!',
-					trabalhador: newTrabalhador,
-					experienciasProfissionais: experienciasProfissionais
-				})
-			} catch (err) {
-				res.status(500).json({
-					message: `Error: ${err}`
-				})
-			}
-		}
-	})
+		await createMultipleExperienciasProfissionais(
+			experienciasProfissionais,
+			newTrabalhador.cpf
+		)
+
+		res.status(200).json({
+			message: 'Trabalhador created!',
+			trabalhador: newTrabalhador,
+			experienciasProfissionais: experienciasProfissionais
+		})
+	} catch (err) {
+		res.status(500).json({
+			message: `Error: ${err}`
+		})
+	}
 }
 
 /**
  * Call multiple insertions of ExperienciasProfissionais, returning any errors.
  */
-function createMultipleExperienciasProfissionais(
+async function createMultipleExperienciasProfissionais(
 	experienciasProfissionais: ExperienciaProfissional[],
 	cpf: Number
-): void {
-	for (const experiencia of experienciasProfissionais) {
-		insertExperienciaProfissional(experiencia, cpf, function (
-			err: any,
-			data: any
-		) {
-			if (err) {
-				throw err
-			} else {
-				return
-			}
-		})
+) {
+	try {
+		for (const experiencia of experienciasProfissionais) {
+			await insertExperienciaProfissional(experiencia, cpf)
+		}
+	} catch (err) {
+		throw new Error(err)
 	}
 }

@@ -13,6 +13,8 @@ export function insert(newTrabalhador: Trabalhador) {
 				console.log('DB error: ', err)
 				return reject(err)
 			}
+
+			console.log('New trabalhador was created!\n', newTrabalhador)
 			resolve(newTrabalhador)
 		})
 	})
@@ -23,23 +25,30 @@ export function insert(newTrabalhador: Trabalhador) {
  */
 export function insertExperienciaProfissional(
 	newExperienciaProfissional: ExperienciaProfissional,
-	cpf: Number,
-	callback: Function
+	cpf: Number
 ) {
-	sql.query(
-		`INSERT INTO \`experienciaprofissional\` (\`cargo\`, \`local\`, \`trabalhador\`) VALUES ('${newExperienciaProfissional.cargo}', '${newExperienciaProfissional.local}', '${cpf}');`,
-		function (err, res) {
+	return new Promise(function (resolve, reject) {
+		const queryString =
+			'INSERT INTO `experienciaprofissional` ' +
+			"(`cargo`, `local`, `trabalhador`) VALUES ('" +
+			newExperienciaProfissional.cargo +
+			"', '" +
+			newExperienciaProfissional.local +
+			"', '" +
+			cpf +
+			"');"
+
+		sql.query(queryString, function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
-				callback(err, null)
-				return
+				return reject(err)
 			}
 
 			console.log(
 				'New ExperienciaProfissional was created!',
 				newExperienciaProfissional
 			)
-			callback(null, newExperienciaProfissional)
-		}
-	)
+			resolve(newExperienciaProfissional)
+		})
+	})
 }
