@@ -11,7 +11,7 @@ import HelloRouter from './routers/HelloRouter'
 
 const app = express()
 
-// Middlewares
+// Global Middlewares
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
