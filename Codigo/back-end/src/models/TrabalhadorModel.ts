@@ -4,19 +4,19 @@ import { Trabalhador, ExperienciaProfissional } from '../types/TrabalhadorTypes'
 /**
  * Insert a new Trabalhador instance in MySQL database.
  */
-export function insert(newTrabalhador: Trabalhador, callback: Function) {
-	sql.query(`INSERT INTO Trabalhador SET ?`, newTrabalhador, function (
-		err,
-		res
-	) {
-		if (err) {
-			console.log('DB error: ', err)
-			callback(err, null)
-			return
-		}
+export function insert(newTrabalhador: Trabalhador) {
+	return new Promise(function (resolve, reject) {
+		const queryString = `INSERT INTO Trabalhador SET ?`
 
-		console.log('New Trabalhador was created! ', newTrabalhador)
-		callback(null, newTrabalhador)
+		sql.query(queryString, newTrabalhador, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
+
+			console.log('New trabalhador was created!\n', newTrabalhador)
+			resolve(newTrabalhador)
+		})
 	})
 }
 
@@ -25,23 +25,30 @@ export function insert(newTrabalhador: Trabalhador, callback: Function) {
  */
 export function insertExperienciaProfissional(
 	newExperienciaProfissional: ExperienciaProfissional,
-	cpf: Number,
-	callback: Function
+	cpf: Number
 ) {
-	sql.query(
-		`INSERT INTO \`experienciaprofissional\` (\`cargo\`, \`local\`, \`trabalhador\`) VALUES ('${newExperienciaProfissional.cargo}', '${newExperienciaProfissional.local}', '${cpf}');`,
-		function (err, res) {
+	return new Promise(function (resolve, reject) {
+		const queryString =
+			'INSERT INTO `experienciaprofissional` ' +
+			"(`cargo`, `local`, `trabalhador`) VALUES ('" +
+			newExperienciaProfissional.cargo +
+			"', '" +
+			newExperienciaProfissional.local +
+			"', '" +
+			cpf +
+			"');"
+
+		sql.query(queryString, function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
-				callback(err, null)
-				return
+				return reject(err)
 			}
 
 			console.log(
 				'New ExperienciaProfissional was created!',
 				newExperienciaProfissional
 			)
-			callback(null, newExperienciaProfissional)
-		}
-	)
+			resolve(newExperienciaProfissional)
+		})
+	})
 }
