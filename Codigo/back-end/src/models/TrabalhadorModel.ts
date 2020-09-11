@@ -4,19 +4,17 @@ import { Trabalhador, ExperienciaProfissional } from '../types/TrabalhadorTypes'
 /**
  * Insert a new Trabalhador instance in MySQL database.
  */
-export function insert(newTrabalhador: Trabalhador, callback: Function) {
-	sql.query(`INSERT INTO Trabalhador SET ?`, newTrabalhador, function (
-		err,
-		res
-	) {
-		if (err) {
-			console.log('DB error: ', err)
-			callback(err, null)
-			return
-		}
+export function insert(newTrabalhador: Trabalhador) {
+	return new Promise(function (resolve, reject) {
+		const queryString = `INSERT INTO Trabalhador SET ?`
 
-		console.log('New Trabalhador was created! ', newTrabalhador)
-		callback(null, newTrabalhador)
+		sql.query(queryString, newTrabalhador, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
+			resolve(newTrabalhador)
+		})
 	})
 }
 
