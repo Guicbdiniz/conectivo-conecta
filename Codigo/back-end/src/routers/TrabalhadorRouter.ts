@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { create } from '../controllers/TrabalhadorController'
+import { create, login } from '../controllers/TrabalhadorController'
 import {
 	checkTrabalhador,
 	checkExperienciaProfissional
@@ -13,5 +13,6 @@ router.use(checkTrabalhador)
 router.use(checkExperienciaProfissional)
 
 router.post('/register/', create)
+router.post('/login/', login)
 
 export default router
