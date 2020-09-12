@@ -88,7 +88,7 @@ export async function login(req: Request, res: Response) {
 
 		// Password check
 		if (await bcrypt.compare(senha, selectedTrabalhador.senha.toString())) {
-			let secretJWTKey = process.env.ACCESS_TOKEN_SECRET
+			const secretJWTKey = process.env.ACCESS_TOKEN_SECRET
 
 			if (secretJWTKey === undefined) {
 				throw new Error('Secret JWT key was not defined')
