@@ -2,6 +2,31 @@ import { Request, Response, NextFunction } from 'express'
 import sql from '../db'
 
 /**
+ * Middleware to check if table 'usuario' exists.
+ *
+ * If the table does not exist, it will crete it.
+ */
+export function checkUsuario(req: Request, res: Response, next: NextFunction) {
+	sql.query(
+		`CREATE TABLE IF NOT EXISTS \`usuario\` (
+			\`email\` VARCHAR(30) NOT NULL,
+			\`senha\` VARCHAR(40) NOT NULL,
+			PRIMARY KEY (\`email\`));
+		  `,
+		function (err, dbRes) {
+			if (err) {
+				console.log('DB error: ', err)
+				return res.status(500).json({
+					message: `Error: ${err}`
+				})
+			}
+
+			next()
+		}
+	)
+}
+
+/**
  * Middleware to check if table 'trabalhador' exists.
  *
  * If the table does not exist, it will create it.
@@ -23,14 +48,18 @@ export function checkTrabalhador(
         \`estadoCivil\` VARCHAR(20) NULL,
         \`numeroDeFilhos\` INT NULL,
         \`telefoneDeContato\` VARCHAR(13) NULL,
-        \`email\` VARCHAR(30) NULL,
         \`endereco\` VARCHAR(60) NULL,
         \`escolaridade\` VARCHAR(30) NULL,
         \`objetivoProfissional\` LONGTEXT NULL,
-        \`resumoProfissional\` LONGTEXT NULL,
-        \`senha\` VARCHAR(60) NULL,
-        PRIMARY KEY (\`cpf\`),
-        UNIQUE INDEX \`CPF_UNIQUE\` (\`cpf\` ASC) VISIBLE);`,
+		\`resumoProfissional\` LONGTEXT NULL,
+		\`email\` VARCHAR(30) NOT NULL,
+		PRIMARY KEY (\`cpf\`),
+		INDEX \`fk_trabalhador_usuario_idx\` (\`email\` ASC) VISIBLE,
+  		CONSTRAINT \`fk_trabalhador_usuario\`
+    	FOREIGN KEY (\`email\`)
+    	REFERENCES \`usuario\` (\`email\`)
+    	ON DELETE CASCADE
+    	ON UPDATE CASCADE);`,
 		function (err, dbRes) {
 			if (err) {
 				console.log('DB error!\n', err)

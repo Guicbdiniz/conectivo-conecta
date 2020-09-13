@@ -2,7 +2,8 @@ import { Router } from 'express'
 import { create, login } from '../controllers/TrabalhadorController'
 import {
 	checkTrabalhador,
-	checkExperienciaProfissional
+	checkExperienciaProfissional,
+	checkUsuario
 } from '../middlewares/DatabaseCheckers'
 
 const router = Router()
@@ -11,6 +12,7 @@ const router = Router()
 // Do not use them in production.
 router.use(checkTrabalhador)
 router.use(checkExperienciaProfissional)
+router.use(checkUsuario)
 
 router.post('/register/', create)
 router.post('/login/', login)
