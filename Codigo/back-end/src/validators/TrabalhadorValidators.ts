@@ -17,3 +17,10 @@ export function createBodyIsValid(body: any): Boolean {
 
 	return isTrabalhador(trabalhador)
 }
+
+/**
+ * Check if request body for login is valid.
+ */
+export function loginBodyIsValid(body: any): Boolean {
+	return body.email && body.senha
+}
