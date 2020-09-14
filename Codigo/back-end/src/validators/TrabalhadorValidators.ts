@@ -1,13 +1,14 @@
 import {
 	isTrabalhador,
-	isExperienciaProfissional
+	isExperienciaProfissional,
+	isUsuario
 } from '../types/TrabalhadorTypes'
 
 /**
  * Check if request body for worker creation is valid.
  */
 export function createBodyIsValid(body: any): Boolean {
-	const { trabalhador, experienciasProfissionais } = body
+	const { trabalhador, experienciasProfissionais, usuario } = body
 
 	for (const experiencia of experienciasProfissionais) {
 		if (!isExperienciaProfissional(experiencia)) {
@@ -15,7 +16,7 @@ export function createBodyIsValid(body: any): Boolean {
 		}
 	}
 
-	return isTrabalhador(trabalhador)
+	return isTrabalhador(trabalhador) && isUsuario(usuario)
 }
 
 /**

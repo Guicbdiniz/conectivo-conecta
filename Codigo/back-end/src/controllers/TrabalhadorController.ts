@@ -2,9 +2,15 @@ import { Request, Response } from 'express'
 import {
 	insert,
 	insertExperienciaProfissional,
-	selectByEmail
+	insertUsuario,
+	selectByEmail,
+	selectUserByEmail
 } from '../models/TrabalhadorModel'
-import { Trabalhador, ExperienciaProfissional } from '../types/TrabalhadorTypes'
+import {
+	Trabalhador,
+	ExperienciaProfissional,
+	Usuario
+} from '../types/TrabalhadorTypes'
 import bcrypt from 'bcrypt'
 import {
 	createBodyIsValid,
@@ -15,7 +21,7 @@ import jwt from 'jsonwebtoken'
 /**
  * Create worker Controller.
  *
- * The request body must contain all the woker's attribute, along with an array with the working experience.
+ * The request body must contain all the woker's attribute, along with an array with the working experience and a user obejct.
  */
 export async function create(req: Request, res: Response) {
 	if (createBodyIsValid(req.body)) {
@@ -25,15 +31,18 @@ export async function create(req: Request, res: Response) {
 		return
 	}
 
+	const newUsuario: Usuario = { ...req.body.usuario }
 	const newTrabalhador: Trabalhador = { ...req.body.trabalhador }
 	const experienciasProfissionais: ExperienciaProfissional[] =
 		req.body.experienciasProfissionais
 
-	const hashedPassword = await bcrypt.hash(newTrabalhador.senha, 10)
-	newTrabalhador.senha = hashedPassword
+	const hashedPassword = await bcrypt.hash(newUsuario.senha, 10)
+	newUsuario.senha = hashedPassword
 
 	try {
-		await insert(newTrabalhador)
+		await insertUsuario(newUsuario)
+
+		await insert(newTrabalhador, newUsuario.email)
 
 		await createMultipleExperienciasProfissionais(
 			experienciasProfissionais,
@@ -43,7 +52,8 @@ export async function create(req: Request, res: Response) {
 		res.status(200).json({
 			message: 'Trabalhador created!',
 			trabalhador: newTrabalhador,
-			experienciasProfissionais: experienciasProfissionais
+			experienciasProfissionais: experienciasProfissionais,
+			usuario: newUsuario
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -85,9 +95,10 @@ export async function login(req: Request, res: Response) {
 
 	try {
 		const selectedTrabalhador = (await selectByEmail(email)) as Trabalhador
+		const selectUsuario = (await selectUserByEmail(email)) as Usuario
 
 		// Password check
-		if (await bcrypt.compare(senha, selectedTrabalhador.senha.toString())) {
+		if (await bcrypt.compare(senha, selectUsuario.senha.toString())) {
 			const secretJWTKey = process.env.ACCESS_TOKEN_SECRET
 
 			if (secretJWTKey === undefined) {
