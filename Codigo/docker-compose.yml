@@ -10,8 +10,6 @@ services:
             MYSQL_DATABASE: conectivo_conecta_db # create db by default
             MYSQL_ROOT_PASSWORD: 637423
           
-        
-
     conectivo-backend:
         build:
             context: back-end/
@@ -29,6 +27,6 @@ services:
     #     build:
     #         context: front-end/
     #     ports:
-    #         - 80:3000
+    #         - 80:?
     #     depends_on:
     #         - conectivo-backend

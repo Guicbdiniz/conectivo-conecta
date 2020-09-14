@@ -1,6 +1,6 @@
 # Código do Projeto
 
-Mantenha neste diretório todo o código do projeto. Se necessário, descreva neste arquivo aspectos relevantes da estrutura de diretórios criada para organização do código.
+O projeto é dividido em backend e frontend, localizados em suas devidas pastas atualmente utiliza como serviços externos o banco MySQL.
 
 # Docker e Docker-compose
 
@@ -22,4 +22,3 @@ Isso inicializará 3 serviços, sendo eles bando de dados (mysql), backend e fro
 ### Dados padrões para desenvolvimento local:
 MYSQL_DATABASE: conectivo_conecta_db
 MYSQL_ROOT_PASSWORD: 637423
-
