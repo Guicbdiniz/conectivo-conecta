@@ -1,21 +1,30 @@
 import sql from '../db'
-import { Trabalhador, ExperienciaProfissional } from '../types/TrabalhadorTypes'
+import {
+	Trabalhador,
+	ExperienciaProfissional,
+	Usuario
+} from '../types/TrabalhadorTypes'
 
 /**
  * Insert a new Trabalhador instance in MySQL database.
  */
-export function insert(newTrabalhador: Trabalhador): Promise<Trabalhador> {
+export function insert(
+	newTrabalhador: Trabalhador,
+	email: String
+): Promise<Trabalhador> {
 	return new Promise(function (resolve, reject) {
 		const queryString = `INSERT INTO Trabalhador SET ?`
 
-		sql.query(queryString, newTrabalhador, function (err, res) {
+		const workerWithEmail: Trabalhador = { ...newTrabalhador, email: email }
+
+		sql.query(queryString, workerWithEmail, function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
 				return reject(err)
 			}
 
-			console.log('New trabalhador was created!\n', newTrabalhador)
-			resolve(newTrabalhador)
+			console.log('New trabalhador was created!\n', workerWithEmail)
+			resolve(workerWithEmail)
 		})
 	})
 }
@@ -54,11 +63,36 @@ export function insertExperienciaProfissional(
 }
 
 /**
+ * Insert a new usuario in MySQL database.
+ */
+export function insertUsuario(usuario: Usuario): Promise<Usuario> {
+	return new Promise(function (resolve, reject) {
+		const queryString =
+			'INSERT INTO `usuario` ' +
+			"(`email`, `senha`) VALUES ('" +
+			usuario.email +
+			"', '" +
+			usuario.senha +
+			"');"
+
+		sql.query(queryString, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
+
+			console.log('New Usuario was created!', usuario)
+			resolve(usuario)
+		})
+	})
+}
+
+/**
  * Select all workers from the DB with the passed email.
  */
 export function selectByEmail(email: String) {
 	return new Promise(function (resolve, reject) {
-		const queryString = `SELECT * FROM Trabalhador WHERE email = '${email}'`
+		const queryString = `SELECT * FROM Trabalhador WHERE email = '${email}';`
 
 		sql.query(queryString, function (err, res) {
 			if (err) {
@@ -79,6 +113,31 @@ export function selectByEmail(email: String) {
 			)[0]
 
 			resolve(returnedTrabalhador)
+		})
+	})
+}
+
+export function selectUserByEmail(email: String) {
+	return new Promise(function (resolve, reject) {
+		const queryString = `SELECT * FROM usuario WHERE email = '${email}';`
+
+		sql.query(queryString, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
+
+			if (res.length != 1) {
+				const errorMsg =
+					'Select by email error: No Usuario was found with the passed email.'
+				console.log(errorMsg)
+				return reject(errorMsg)
+			}
+
+			// Data is returned with "RowDataPacket" name. This was the only way I've found to remove it
+			const returnedUser = Object.values(JSON.parse(JSON.stringify(res)))[0]
+
+			resolve(returnedUser)
 		})
 	})
 }

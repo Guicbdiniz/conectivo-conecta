@@ -3,7 +3,6 @@
  */
 export interface Trabalhador {
 	cpf: Number
-	senha: String
 	nomeCompleto: String
 	nomeCompletoPai: String
 	nomeCompletoMae: String
@@ -13,7 +12,7 @@ export interface Trabalhador {
 	estadoCivil: String
 	numeroDeFilhos: Number
 	telefoneDeContato: String
-	email: String
+	email?: String
 	endereco: String
 	escolaridade: String
 	objetivoProfissional: String
@@ -30,7 +29,6 @@ export function isTrabalhador(object: any): object is Trabalhador {
 
 	const TrabalhadorProperties: { [key: string]: string } = {
 		cpf: '[object Number]',
-		senha: '[object String]',
 		nomeCompleto: '[object String]',
 		nomeCompletoPai: '[object String]',
 		nomeCompletoMae: '[object String]',
@@ -40,7 +38,6 @@ export function isTrabalhador(object: any): object is Trabalhador {
 		estadoCivil: '[object String]',
 		numeroDeFilhos: '[object Number]',
 		telefoneDeContato: '[object String]',
-		email: '[object String]',
 		endereco: '[object String]',
 		escolaridade: '[object String]',
 		objetivoProfissional: '[object String]',
@@ -91,6 +88,42 @@ export function isExperienciaProfissional(
 				propertyName in object &&
 				Object.prototype.toString.call(object[propertyName]) ===
 					ExperienciasProperties[propertyName]
+			)
+		) {
+			return false
+		}
+	}
+
+	return true
+}
+
+/**
+ * User info interface
+ */
+export interface Usuario {
+	email: String
+	senha: String
+}
+
+/**
+ * Check if object agrees with the user interface
+ */
+export function isUsuario(object: any): object is Usuario {
+	if (object === null || object === undefined) {
+		return false
+	}
+
+	const UsuarioProperties: { [key: string]: string } = {
+		email: '[object String]',
+		senha: '[object String]'
+	}
+
+	for (const propertyName in UsuarioProperties) {
+		if (
+			!(
+				propertyName in object &&
+				Object.prototype.toString.call(object[propertyName]) ===
+					UsuarioProperties[propertyName]
 			)
 		) {
 			return false

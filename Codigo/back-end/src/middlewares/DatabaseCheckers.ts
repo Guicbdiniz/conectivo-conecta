@@ -10,7 +10,7 @@ export function checkUsuario(req: Request, res: Response, next: NextFunction) {
 	sql.query(
 		`CREATE TABLE IF NOT EXISTS \`usuario\` (
 			\`email\` VARCHAR(30) NOT NULL,
-			\`senha\` VARCHAR(40) NOT NULL,
+			\`senha\` VARCHAR(80) NOT NULL,
 			PRIMARY KEY (\`email\`));
 		  `,
 		function (err, dbRes) {
