@@ -1,12 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { LoginForm } from "./src/components/LoginForm";
+import { useSelector } from "react-redux";
+import LoginPage from "./src/pages/LoginPage";
+import SignUpPage from "./src/pages/SignUpPage";
 
 export default function App() {
+  const { login } = useSelector((state) => state.userInformationReducer);
   return (
     <View style={styles.container}>
-      <LoginForm />
+      {login ? <LoginPage /> : <SignUpPage /> }
+      
     </View>
   );
 }
