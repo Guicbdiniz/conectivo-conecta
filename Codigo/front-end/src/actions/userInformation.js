@@ -23,7 +23,7 @@ export const sendUserInformation = (userLoginData) => async (dispatch) => {
 dispatch(sendUserInformationRequest());
 try {
     const { data } = await axios.post(
-        `backend/api/login`,
+        `https://localhost:8080/trabalhador/login`,
         userLoginData
       );
       dispatch(sendUserInformationSuccess(data));
@@ -48,7 +48,7 @@ export const createUserInformationFailure = (error) => ({
 export const createUserInformation = (userData) => async (dispatch) => {
     dispatch(createUserInformationRequest());
     try {
-        const { data } = await axios.post(`backend/api/user`, userData);
+        const { data } = await axios.post(`https://localhost:8080/trabalhador/register/`, userData);
         dispatch(createUserInformationSuccess());
     } catch(error) {
         dispatch(createUserInformationFailure(error));
