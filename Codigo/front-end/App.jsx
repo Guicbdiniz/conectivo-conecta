@@ -1,12 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useSelector } from "react-redux";
+import LoginPage from "./src/pages/LoginPage";
+import SignUpPage from "./src/pages/SignUpPage";
 
 export default function App() {
+  const { login } = useSelector((state) => state.userInformationReducer);
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {login ? <LoginPage /> : <SignUpPage /> }
+      
     </View>
   );
 }
