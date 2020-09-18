@@ -9,8 +9,7 @@ Este projeto não possui diagrama de classes por utilizar programação funciona
 
 * `Artefatos/diagramas`
 	* **DiagramaER.png**: Diagrama Entidade-Relacionamento criado na sprint 2
-	* **DiagramaM-front.png**: Diagrama do modulos do front-end criado na sprint 2
-	* **DiagramaM-back.png**: Diagrama do modulos do backend-end criado na sprint 2
+	* **DiagramaDeComponentes.jpg**: Diagrama de Componentes criado na sprint 2
 
 * `Artefatos/fotos`
 	* **email-reuniao-1.png**: Foto do email da primeira reuniao
