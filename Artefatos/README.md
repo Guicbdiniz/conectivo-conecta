@@ -2,15 +2,22 @@
 
 Este diretório mantém os artefatos do projeto. 
 
+Este projeto não possui diagrama de classes por utilizar programação funcional, porém foi-se criado um diagrama de módulos
 
-Liste os artefatos produzidos, com suas localizações e descrição do conteúdo.
+* `Artefatos/atas`
+	* **Ata_Primeira_Reunião.pdf**: Ata de reunião do dia 21 de agosto de 2020.
 
-Por exemplo, pode-se criar um diretório "atas", que seria descrito da seguinte forma:
-* `/atas`
-	* **Ata_xx_ago_2020.docx**: Ata de reunião do dia xx de agosto de 2020.
+* `Artefatos/diagramas`
+	* **DiagramaER.png**: Diagrama Entidade-Relacionamento criado na sprint 2
+	* **DiagramaDeComponentes.jpg**: Diagrama de Componentes criado na sprint 2
 
-Pode-se também criar um diretório "canvas", que seria descrito da seguinte forma:
-* `/canvas`
-	* **BusinessModelCanvas.pdf**: Canvas do modelo de negócios.
-
-Assim, sucessivamente para outros artefatos como `processos` e `DER`, etc.
+* `Artefatos/fotos`
+	* **email-reuniao-1.png**: Foto do email da primeira reuniao
+	* **reuniao1**: Foto retirada durante a primeira reuniao
+	* **trello-sprint1**: Foto do progresso do trello durante a primeira sprint
+	* **trello-sprint2**: Foto do progresso do trello durante a segunda sprint
+	* **whatsApp-sprint1**: Foto de uma consulta feita ao cliente durante a primeira sprint
+	
+* `Artefatos/apresentacoes`
+	* **apresentacao-inicial.pptx**: Primeiro slide de apresentacao do projeto
+	
