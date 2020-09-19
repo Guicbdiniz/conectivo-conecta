@@ -17,6 +17,7 @@ Este projeto não possui diagrama de classes por utilizar programação funciona
 	* **trello-sprint1**: Foto do progresso do trello durante a primeira sprint
 	* **trello-sprint2**: Foto do progresso do trello durante a segunda sprint
 	* **whatsApp-sprint1**: Foto de uma consulta feita ao cliente durante a primeira sprint
+	* **transcricao-audio-sprint1**: Foto da transcrição do áudio presente em "whatsApp-sprint1"
 	
 * `Artefatos/apresentacoes`
 	* **apresentacao-inicial.pptx**: Primeiro slide de apresentacao do projeto
