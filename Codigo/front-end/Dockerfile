@@ -1,9 +1,12 @@
-FROM node:alpine
+FROM node:alpine as builder
 WORKDIR /usr/src/app
 COPY package*.json /usr/src/app/
-COPY . /usr/src/app/
-RUN npm install
+RUN npm install -g expo-cli && npm install
+ADD . .
 
-EXPOSE ?
+FROM builder as packager
+RUN expo-cli build:web
 
-ENTRYPOINT npm start
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+COPY --from=packager /usr/src/app/web-build .
