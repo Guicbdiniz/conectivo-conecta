@@ -7,7 +7,7 @@ type Props = {
 };
 
 const LoginForm = ({ handleFormSubmit, handleSignUpClick }: Props) => {
-  const [cpf, setCpf] = useState(0);
+  const [email, setEmail] = useState(0);
   const [password, setPassword] = useState("");
 
   const styles = StyleSheet.create({
@@ -65,7 +65,7 @@ const LoginForm = ({ handleFormSubmit, handleSignUpClick }: Props) => {
 
   const sendUser = () => {
     const data = {
-      cpf,
+      email,
       password,
     };
     handleFormSubmit(data);
@@ -74,7 +74,7 @@ const LoginForm = ({ handleFormSubmit, handleSignUpClick }: Props) => {
     <View style={styles.view}>
       <Text style={styles.conectaText}>Conecta</Text>
       <Text style={styles.loginText}>Login</Text>
-      <TextInput placeholder="Digite seu CPF" onChangeText={(text) => setCpf(text)} style={styles.cpfInput} />
+      <TextInput placeholder="Digite seu email" onChangeText={(text) => setEmail(text)} style={styles.cpfInput} />
       <TextInput
         secureTextEntry
         placeholder="Digite sua senha"

@@ -23,8 +23,8 @@ export const sendUserInformation = (userLoginData) => async (dispatch) => {
 dispatch(sendUserInformationRequest());
 try {
     const { data } = await axios.post(
-        `https://localhost:8080/trabalhador/login`,
-        userLoginData
+        `trabalhador/login`,
+        { usuario: userLoginData }
       );
       dispatch(sendUserInformationSuccess(data));
 } catch(error) {
