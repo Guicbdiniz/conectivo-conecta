@@ -18,6 +18,7 @@ Este projeto não possui diagrama de classes por utilizar programação funciona
 	* **trello-sprint2**: Foto do progresso do trello durante a segunda sprint
 	* **whatsApp-sprint1**: Foto de uma consulta feita ao cliente durante a primeira sprint
 	* **transcricao-audio-sprint1**: Foto da transcrição do áudio presente em "whatsApp-sprint1"
+	* **andamento-requistos1-sprint2.png**: Foto dos requisitos. Verde = completo. Amarelo = Em andamento.
 	
 * `Artefatos/apresentacoes`
 	* **apresentacao-inicial.pptx**: Primeiro slide de apresentacao do projeto
