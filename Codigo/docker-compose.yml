@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+    db:
+        image: mysql
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_DATABASE: conectivo_conecta_db # create db by default
+            MYSQL_ROOT_PASSWORD: 637423
+
+    conectivo-backend:
+        build:
+            context: back-end/
+        ports:
+            - 8000:8000
+        environment:
+            DB_HOST: localhost:3306
+            DB_USER: root
+            DB_PASSWORD: 637423
+            DB_NAME: conectivo_conecta_db
+        depends_on:
+            - db
+
+    conectivo-frontend:
+        build:
+            context: front-end/
+        ports:
+            - 80:80
+        depends_on:
+            - conectivo-backend
