@@ -5,7 +5,8 @@ Este diretório mantém os artefatos do projeto.
 Este projeto não possui diagrama de classes por utilizar programação funcional, porém foi-se criado um diagrama de módulos
 
 * `Artefatos/atas`
-	* **Ata_Primeira_Reunião.pdf**: Ata de reunião do dia 21 de agosto de 2020.
+	* **Ata-Primeira-Reuniao.pdf**: Ata de reunião do dia 21 de agosto de 2020.
+	* **Ata-Primeira-Reuniao.pdf**: Ata de reunião do dia 24 de setembro de 2020.
 
 * `Artefatos/diagramas`
 	* **DiagramaER.png**: Diagrama Entidade-Relacionamento criado na sprint 2
