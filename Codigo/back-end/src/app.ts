@@ -19,6 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/hello', HelloRouter)
 app.use('/trabalhador', TrabalhadorRouter)
 
-app.listen(8000, () => {
+app.listen(8080, () => {
 	console.log('Server is running...')
 })
