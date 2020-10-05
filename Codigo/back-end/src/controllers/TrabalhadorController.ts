@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import {
 	insert,
 	insertUsuario,
+	selectAllTrabalhadores,
 	selectByEmail,
 	selectUserByEmail
 } from '../models/TrabalhadorModel'
@@ -129,6 +130,21 @@ export async function getTrabalhador(req: Request, res: Response) {
 			message: 'Trabalhador getted!',
 			trabalhador: trabalhador,
 			usuario: usuario
+		})
+	} catch (err) {
+		res.status(500).json({
+			message: 'Error: ' + err
+		})
+	}
+}
+
+export async function getAllTrabalhadores(req: Request, res: Response) {
+	try {
+		const allTrabalhadores = (await selectAllTrabalhadores()) as Trabalhador[]
+
+		res.status(200).json({
+			message: 'Trabalhadores getted!',
+			trabalhadores: allTrabalhadores
 		})
 	} catch (err) {
 		res.status(500).json({
