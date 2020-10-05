@@ -117,6 +117,9 @@ export function selectByEmail(email: String) {
 	})
 }
 
+/**
+ * Select User with the passed email.
+ */
 export function selectUserByEmail(email: String) {
 	return new Promise(function (resolve, reject) {
 		const queryString = `SELECT * FROM usuario WHERE email = '${email}';`
@@ -138,6 +141,24 @@ export function selectUserByEmail(email: String) {
 			const returnedUser = Object.values(JSON.parse(JSON.stringify(res)))[0]
 
 			resolve(returnedUser)
+		})
+	})
+}
+
+/**
+ * Select all Trabalhadores from the DB.
+ */
+export function selectAllTrabalhadores() {
+	return new Promise(function (resolve, reject) {
+		const queryString = `SELECT * FROM trabalhador`
+
+		sql.query(queryString, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
+
+			resolve(res)
 		})
 	})
 }
