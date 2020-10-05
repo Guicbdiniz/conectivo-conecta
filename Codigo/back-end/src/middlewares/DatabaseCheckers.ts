@@ -78,37 +78,40 @@ export function checkTrabalhador(
  * Middleware to check if table 'experienciaProfissional' exists.
  *
  * If the table does not exist, it will create it.
+ *
+ * DEPRECATED
+ *
  */
-export function checkExperienciaProfissional(
-	req: Request,
-	res: Response,
-	next: NextFunction
-) {
-	sql.query(
-		`CREATE TABLE IF NOT EXISTS \`experienciaprofissional\` (
-            \`id\` INT NOT NULL AUTO_INCREMENT,
-            \`cargo\` VARCHAR(45) NULL,
-            \`local\` VARCHAR(45) NULL,
-            \`trabalhador\` VARCHAR(12) NULL,
-            PRIMARY KEY (\`id\`),
-            UNIQUE INDEX \`id_UNIQUE\` (\`id\` ASC) VISIBLE,
-            INDEX \`fk_experienciaProfissional_trabalhador_idx\` (\`trabalhador\` ASC) VISIBLE,
-            CONSTRAINT \`fk_experienciaProfissional_trabalhador\`
-              FOREIGN KEY (\`trabalhador\`)
-              REFERENCES \`trabalhador\` (\`cpf\`)
-              ON DELETE NO ACTION
-              ON UPDATE NO ACTION)
-          COMMENT = ' ';`,
-		function (err, dbRes) {
-			if (err) {
-				console.log('DB error!\n', err)
-				res.status(500).json({
-					message: `Error: ${err}`
-				})
-				return
-			}
+// export function checkExperienciaProfissional(
+// 	req: Request,
+// 	res: Response,
+// 	next: NextFunction
+// ) {
+// 	sql.query(
+// 		`CREATE TABLE IF NOT EXISTS \`experienciaprofissional\` (
+//             \`id\` INT NOT NULL AUTO_INCREMENT,
+//             \`cargo\` VARCHAR(45) NULL,
+//             \`local\` VARCHAR(45) NULL,
+//             \`trabalhador\` VARCHAR(12) NULL,
+//             PRIMARY KEY (\`id\`),
+//             UNIQUE INDEX \`id_UNIQUE\` (\`id\` ASC) VISIBLE,
+//             INDEX \`fk_experienciaProfissional_trabalhador_idx\` (\`trabalhador\` ASC) VISIBLE,
+//             CONSTRAINT \`fk_experienciaProfissional_trabalhador\`
+//               FOREIGN KEY (\`trabalhador\`)
+//               REFERENCES \`trabalhador\` (\`cpf\`)
+//               ON DELETE NO ACTION
+//               ON UPDATE NO ACTION)
+//           COMMENT = ' ';`,
+// 		function (err, dbRes) {
+// 			if (err) {
+// 				console.log('DB error!\n', err)
+// 				res.status(500).json({
+// 					message: `Error: ${err}`
+// 				})
+// 				return
+// 			}
 
-			next()
-		}
-	)
-}
+// 			next()
+// 		}
+// 	)
+// }
