@@ -1,6 +1,11 @@
 import { Router } from 'express'
-import { create, login } from '../controllers/TrabalhadorController'
+import {
+	create,
+	login,
+	getTrabalhador
+} from '../controllers/TrabalhadorController'
 import { checkTrabalhador, checkUsuario } from '../middlewares/DatabaseCheckers'
+import { authenticateJWTToken } from '../middlewares/TokenAuth'
 
 const router = Router()
 
@@ -11,5 +16,6 @@ router.use(checkUsuario)
 
 router.post('/register/', create)
 router.post('/login/', login)
+router.get('/:email', authenticateJWTToken, getTrabalhador)
 
 export default router
