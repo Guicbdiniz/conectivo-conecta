@@ -84,10 +84,10 @@ export async function login(req: Request, res: Response) {
 
 	try {
 		const selectedTrabalhador = (await selectByEmail(email)) as Trabalhador
-		const selectUsuario = (await selectUserByEmail(email)) as Usuario
+		const selectedUsuario = (await selectUserByEmail(email)) as Usuario
 
 		// Password check
-		if (await bcrypt.compare(senha, selectUsuario.senha.toString())) {
+		if (await bcrypt.compare(senha, selectedUsuario.senha.toString())) {
 			const secretJWTKey = process.env.ACCESS_TOKEN_SECRET
 
 			if (secretJWTKey === undefined) {
@@ -105,6 +105,31 @@ export async function login(req: Request, res: Response) {
 				message: 'Error: invalid password.'
 			})
 		}
+	} catch (err) {
+		res.status(500).json({
+			message: 'Error: ' + err
+		})
+	}
+}
+
+/**
+ * Get Trabalhador Controller.
+ *
+ */
+export async function getTrabalhador(req: Request, res: Response) {
+	const { email } = req.params
+
+	console.log('Email: ' + email)
+
+	try {
+		const trabalhador = (await selectByEmail(email)) as Trabalhador
+		const usuario = (await selectUserByEmail(email)) as Usuario
+
+		res.status(200).json({
+			message: 'Trabalhador getted!',
+			trabalhador: trabalhador,
+			usuario: usuario
+		})
 	} catch (err) {
 		res.status(500).json({
 			message: 'Error: ' + err
