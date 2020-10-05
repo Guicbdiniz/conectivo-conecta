@@ -1,16 +1,11 @@
 import { Request, Response } from 'express'
 import {
 	insert,
-	insertExperienciaProfissional,
 	insertUsuario,
 	selectByEmail,
 	selectUserByEmail
 } from '../models/TrabalhadorModel'
-import {
-	Trabalhador,
-	ExperienciaProfissional,
-	Usuario
-} from '../types/TrabalhadorTypes'
+import { Trabalhador, Usuario } from '../types/TrabalhadorTypes'
 import bcrypt from 'bcrypt'
 import {
 	createBodyIsValid,
@@ -33,8 +28,6 @@ export async function create(req: Request, res: Response) {
 
 	const newUsuario: Usuario = { ...req.body.usuario }
 	const newTrabalhador: Trabalhador = { ...req.body.trabalhador }
-	const experienciasProfissionais: ExperienciaProfissional[] =
-		req.body.experienciasProfissionais
 
 	const hashedPassword = await bcrypt.hash(newUsuario.senha, 10)
 	newUsuario.senha = hashedPassword
@@ -44,15 +37,9 @@ export async function create(req: Request, res: Response) {
 
 		await insert(newTrabalhador, newUsuario.email)
 
-		await createMultipleExperienciasProfissionais(
-			experienciasProfissionais,
-			newTrabalhador.cpf
-		)
-
 		res.status(200).json({
 			message: 'Trabalhador created!',
 			trabalhador: newTrabalhador,
-			experienciasProfissionais: experienciasProfissionais,
 			usuario: newUsuario
 		})
 	} catch (err) {
@@ -64,19 +51,21 @@ export async function create(req: Request, res: Response) {
 
 /**
  * Call multiple insertions of ExperienciasProfissionais, returning any errors.
+ *
+ * DEPRECATED
  */
-async function createMultipleExperienciasProfissionais(
-	experienciasProfissionais: ExperienciaProfissional[],
-	cpf: Number
-) {
-	try {
-		for (const experiencia of experienciasProfissionais) {
-			await insertExperienciaProfissional(experiencia, cpf)
-		}
-	} catch (err) {
-		throw new Error(err)
-	}
-}
+// async function createMultipleExperienciasProfissionais(
+// 	experienciasProfissionais: ExperienciaProfissional[],
+// 	cpf: Number
+// ) {
+// 	try {
+// 		for (const experiencia of experienciasProfissionais) {
+// 			await insertExperienciaProfissional(experiencia, cpf)
+// 		}
+// 	} catch (err) {
+// 		throw new Error(err)
+// 	}
+// }
 
 /**
  * Login controller.
