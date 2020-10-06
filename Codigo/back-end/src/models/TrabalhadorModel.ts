@@ -93,7 +93,14 @@ export function insertUsuario(usuario: Usuario): Promise<Usuario> {
 export function removeTrabalhador(email: String): Promise<String> {
     return new Promise(function (resolve, reject) {
         const queryString =
-            'DELETE FROM `trabalhador` ' + "WHERE `email` = '" + email + "';"
+            'DELETE FROM `trabalhador` ' +
+            "WHERE `email` = '" +
+            email +
+            "';" +
+            'DELETE FROM `usuario` ' +
+            "WHERE `email` = '" +
+            email +
+            "';"
 
         sql.query(queryString, function (err, res) {
             if (err) {
