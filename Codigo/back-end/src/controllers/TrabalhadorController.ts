@@ -50,6 +50,37 @@ export async function create(req: Request, res: Response) {
 	}
 }
 
+export async function delete(req: Request, res: Response) {
+	// if (createBodyIsValid(req.body)) {
+	// 	res.status(400).json({
+	// 		message: 'Error: Incorrect request body.'
+	// 	})
+	// 	return
+	// }
+
+	// const oldUsuario: Usuario = { ...req.body.usuario }
+	// const newTrabalhador: Trabalhador = { ...req.body.trabalhador }
+
+	// const hashedPassword = await bcrypt.hash(oldUsuario.senha, 10)
+	// newUsuario.senha = hashedPassword
+
+	// try {
+	// 	await deleteUsuario(oldUsuario)
+
+	// 	await insert(newTrabalhador, oldUsuario.email)
+
+	// 	res.status(200).json({
+	// 		message: 'Trabalhador created!',
+	// 		trabalhador: newTrabalhador,
+	// 		usuario: oldUsuario
+	// 	})
+	// } catch (err) {
+	// 	res.status(500).json({
+	// 		message: `Error: ${err}`
+	// 	})
+	// }
+}
+
 /**
  * Call multiple insertions of ExperienciasProfissionais, returning any errors.
  *

@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import {
 	create,
+	delete,
 	login,
 	getTrabalhador,
 	getAllTrabalhadores
@@ -15,6 +16,7 @@ const router = Router()
 router.use(checkTrabalhador)
 router.use(checkUsuario)
 
+router.post('/remove/', delete)
 router.post('/register/', create)
 router.post('/login/', login)
 router.get('/:email', authenticateJWTToken, getTrabalhador)
