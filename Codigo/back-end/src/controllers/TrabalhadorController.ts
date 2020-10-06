@@ -142,18 +142,19 @@ export async function getTrabalhador(req: Request, res: Response) {
     }
 }
 
+/**
+ * Delete trabalhador controller.
+ */
 export async function deleteTrabalhador(req: Request, res: Response) {
     const {email} = req.params
 
     console.log('Email: ' + email)
 
     try {
-        const usuario: Usuario = {...req.body.usuario}
-
-        await removeTrabalhador(usuario)
+        await removeTrabalhador(email)
 
         res.status(200).json({
-            message: 'Trabalhador deleted!',
+            message: `Trabalhador with email: ${email} deleted!`,
         })
     } catch (err) {
         res.status(500).json({
@@ -162,6 +163,9 @@ export async function deleteTrabalhador(req: Request, res: Response) {
     }
 }
 
+/**
+ * Get all trabalhadores controller.
+ */
 export async function getAllTrabalhadores(req: Request, res: Response) {
     try {
         const allTrabalhadores = (await selectAllTrabalhadores()) as Trabalhador[]

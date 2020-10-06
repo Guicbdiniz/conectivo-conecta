@@ -87,13 +87,13 @@ export function insertUsuario(usuario: Usuario): Promise<Usuario> {
     })
 }
 
-export function removeTrabalhador(usuario: Usuario): Promise<Usuario> {
+/**
+ * Find trabalhador by email and delete it by it's email on trabalhador table.
+ */
+export function removeTrabalhador(email: String): Promise<String> {
     return new Promise(function (resolve, reject) {
         const queryString =
-            'DELETE FROM `trabalhador` ' +
-            "WHERE `email` = '" +
-            usuario.email +
-            "';"
+            'DELETE FROM `trabalhador` ' + "WHERE `email` = '" + email + "';"
 
         sql.query(queryString, function (err, res) {
             if (err) {
@@ -101,8 +101,8 @@ export function removeTrabalhador(usuario: Usuario): Promise<Usuario> {
                 return reject(err)
             }
 
-            console.log('Usuario deleted!', usuario)
-            resolve(usuario)
+            console.log('Usuario deleted!', email)
+            resolve(email)
         })
     })
 }
