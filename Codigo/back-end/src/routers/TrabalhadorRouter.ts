@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import {
-	create,
-	delete,
-	login,
-	getTrabalhador,
-	getAllTrabalhadores
+    create,
+    deleteUsuario,
+    login,
+    getTrabalhador,
+    getAllTrabalhadores,
 } from '../controllers/TrabalhadorController'
 import { checkTrabalhador, checkUsuario } from '../middlewares/DatabaseCheckers'
 import { authenticateJWTToken } from '../middlewares/TokenAuth'
@@ -16,7 +16,7 @@ const router = Router()
 router.use(checkTrabalhador)
 router.use(checkUsuario)
 
-router.post('/remove/', delete)
+router.post('/remove/', deleteUsuario)
 router.post('/register/', create)
 router.post('/login/', login)
 router.get('/:email', authenticateJWTToken, getTrabalhador)
