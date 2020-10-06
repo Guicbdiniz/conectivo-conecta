@@ -92,24 +92,29 @@ export function insertUsuario(usuario: Usuario): Promise<Usuario> {
  */
 export function removeTrabalhador(email: String): Promise<String> {
     return new Promise(function (resolve, reject) {
-        const queryString =
-            // 'DELETE FROM `trabalhador` ' +
-            // "WHERE `email` = '" +
-            // email +
-            // "';" +
+        const trabalhadorQueryString =
+            'DELETE FROM `trabalhador` ' + "WHERE `email` = '" + email + "'"
+        const usuarioQueryString =
             'DELETE FROM `usuario` ' + "WHERE `email` = '" + email + "'"
 
-        console.log(queryString)
-
-        sql.query(queryString, function (err, res) {
+        sql.query(trabalhadorQueryString, function (err, res) {
             if (err) {
                 console.log('DB error: ', err)
                 return reject(err)
             }
 
             console.log('Usuario deleted!', email)
-            resolve(email)
         })
+
+        sql.query(usuarioQueryString, function (err, res) {
+            if (err) {
+                console.log('DB error: ', err)
+                return reject(err)
+            }
+
+            console.log('Usuario deleted!', email)
+        })
+        resolve(email)
     })
 }
 

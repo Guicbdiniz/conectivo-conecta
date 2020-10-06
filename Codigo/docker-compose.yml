@@ -15,7 +15,7 @@ services:
         ports:
             - 8000:8000
         environment:
-            DB_HOST: localhost:3306
+            DB_HOST: codigo_db_1
             DB_USER: root
             DB_PASSWORD: 637423
             DB_NAME: conectivo_conecta_db
