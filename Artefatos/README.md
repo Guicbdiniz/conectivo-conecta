@@ -9,8 +9,8 @@ Este projeto não possui diagrama de classes por utilizar programação funciona
 	* **Ata-Primeira-Reuniao.pdf**: Ata de reunião do dia 24 de setembro de 2020.
 
 * `Artefatos/diagramas`
-	* **DiagramaER.png**: Diagrama Entidade-Relacionamento criado na sprint 2
-	* **DiagramaDeComponentes.jpg**: Diagrama de Componentes criado na sprint 2
+	* **DiagramaER.png**: Diagrama Entidade-Relacionamento criado na sprint 2 e atualizado na sprint 3
+	* **DiagramaDeComponentes.jpg**: Diagrama de Componentes criado na sprint 2 e atualizado na sprint 3.
 
 * `Artefatos/fotos`
 	* **sprint1-email-reuniao.png**: Foto do email da primeira reunião
