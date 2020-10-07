@@ -1,8 +1,8 @@
 import React from "react"
 import { LoginFormContainer } from "../containers/LoginFormContainer";
 
-const LoginPage = () => (
-    <LoginFormContainer />
+const LoginPage = ({ navigation }) => (
+    <LoginFormContainer navigation={navigation} />
 );
 
 export default LoginPage;

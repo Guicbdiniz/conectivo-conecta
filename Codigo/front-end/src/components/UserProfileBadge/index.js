@@ -1,0 +1,1 @@
+export { default as UserProfileBadge } from "./UserProfileBadge";

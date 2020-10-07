@@ -3,10 +3,11 @@ import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 
 type Props = {
   handleFormSubmit: Function,
-  handleSignUpClick: Function
+  handleSignUpClick: Function,
+  navigation: Object
 };
 
-const LoginForm = ({ handleFormSubmit, handleSignUpClick }: Props) => {
+const LoginForm = ({ handleFormSubmit, handleSignUpClick, navigation }: Props) => {
   const [email, setEmail] = useState(0);
   const [password, setPassword] = useState("");
 
@@ -51,7 +52,6 @@ const LoginForm = ({ handleFormSubmit, handleSignUpClick }: Props) => {
     view: {
         flex: 1,
         justifyContent: "center",
-        backgroundColor: "#fff",
         textAlign: "center",
         marginHorizontal: 16,
     }, 
@@ -59,6 +59,8 @@ const LoginForm = ({ handleFormSubmit, handleSignUpClick }: Props) => {
         textDecorationLine: "underline", 
         textDecorationColor: "#DF0B0B",
         color: "#DF0B0B",
+        textAlign: 'center',
+        width: 'auto',
         marginTop:10
     }
   });
@@ -81,8 +83,10 @@ const LoginForm = ({ handleFormSubmit, handleSignUpClick }: Props) => {
         onChangeText={(text) => setPassword(text)}
         style={styles.passwordInput}
       />
-      <Button title="Entrar" onPress={() => sendUser()} style={styles.button} color="#DF0B0B" />
-      <Text style={styles.link} onPress={() => handleSignUpClick()}>Não tem uma conta ainda? Registre-se</Text>
+      <Button title="Entrar" onPress={() => { sendUser(); navigation.navigate('Meu Perfil');}} style={styles.button} color="#DF0B0B" />
+      <Text style={styles.link} onPress={() =>
+            navigation.navigate('SignUp')
+          }>Não tem uma conta ainda? Registre-se</Text>
     </View>
   );
 };

@@ -71,7 +71,6 @@ const SignUpForm = ({handleSubmitData}: Props) => {
     view: {
       flex: 1,
       justifyContent: "center",
-      backgroundColor: "#fff",
       padding: 20,
       margin: 10,
       marginHorizontal: 16,
