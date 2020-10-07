@@ -13,7 +13,7 @@ export function insert(
     email: String
 ): Promise<Trabalhador> {
     return new Promise(function (resolve, reject) {
-        const queryString = `INSERT INTO Trabalhador SET ?`
+        const queryString = `INSERT INTO trabalhador SET ?`
 
         const workerWithEmail: Trabalhador = {...newTrabalhador, email: email}
 
@@ -123,7 +123,7 @@ export function removeTrabalhador(email: String): Promise<String> {
  */
 export function selectByEmail(email: String) {
     return new Promise(function (resolve, reject) {
-        const queryString = `SELECT * FROM Trabalhador WHERE email = '${email}';`
+        const queryString = `SELECT * FROM trabalhador WHERE email = '${email}';`
 
         sql.query(queryString, function (err, res) {
             if (err) {
