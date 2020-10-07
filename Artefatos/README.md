@@ -24,5 +24,6 @@ Este projeto não possui diagrama de classes por utilizar programação funciona
   - **sprint2-trello.png**: Foto do progresso do trello durante a segunda sprint
   - **sprint3-trello.png**: Foto do progresso do trello durante a terceira sprint
   - **sprint3-whatsApp.png**: Foto da marcação de uma reunião durante a terceira sprint
+  - **sprint4-trello.png**: Foto do progresso do trello durante a quarta sprint
 - `Artefatos/apresentacoes`
   - **apresentacao-inicial.pptx**: Primeiro slide de apresentacao do projeto
