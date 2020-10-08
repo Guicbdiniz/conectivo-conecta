@@ -16,12 +16,14 @@ Este projeto não possui diagrama de classes por utilizar programação funciona
 
 - `Artefatos/fotos`
   - **sprint1-email-reuniao.png**: Foto do email da primeira reunião
+  - **sprint1-requisitos-funcionais.png**: Foto dos requisitos funcionais definidos na primeira sprint
   - **sprint1-reuniao.png**: Foto retirada durante a primeira reunião
   - **sprint1-transcricao-audio.png**: Foto da transcrição do áudio presente em "sprint1-whatsApp"
   - **sprint1-trello.png**: Foto do progresso do trello durante a primeira sprint
   - **sprint1-whatsApp.png**: Foto de uma consulta feita ao cliente durante a primeira sprint
   - **sprint2-andamento-requistos.png**: Foto dos requisitos. Verde = completo. Amarelo = Em andamento
   - **sprint2-trello.png**: Foto do progresso do trello durante a segunda sprint
+  - **sprint3-andamento-requistos.png**: Foto dos requisitos. Verde = completo. Amarelo = Em andamento
   - **sprint3-trello.png**: Foto do progresso do trello durante a terceira sprint
   - **sprint3-whatsApp.png**: Foto da marcação de uma reunião durante a terceira sprint
   - **sprint4-trello.png**: Foto do progresso do trello durante a quarta sprint
