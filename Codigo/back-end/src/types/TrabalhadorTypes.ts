@@ -4,7 +4,6 @@
 export interface Trabalhador {
 	cpf: Number
 	nomeCompleto: String
-	nomeCompletoPai: String
 	nomeCompletoMae: String
 	numeroDeRG: Number
 	dataDeNascimento: String
@@ -30,7 +29,6 @@ export function isTrabalhador(object: any): object is Trabalhador {
 	const TrabalhadorProperties: { [key: string]: string } = {
 		cpf: '[object Number]',
 		nomeCompleto: '[object String]',
-		nomeCompletoPai: '[object String]',
 		nomeCompletoMae: '[object String]',
 		numeroDeRG: '[object Number]',
 		dataDeNascimento: '[object String]',

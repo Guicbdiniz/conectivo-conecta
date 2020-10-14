@@ -40,7 +40,6 @@ export function checkTrabalhador(
 		`CREATE TABLE IF NOT EXISTS \`trabalhador\` (
         \`cpf\` VARCHAR(12) NOT NULL,
         \`nomeCompleto\` VARCHAR(45) NULL,
-        \`nomeCompletoPai\` VARCHAR(45) NULL,
         \`nomeCompletoMae\` VARCHAR(45) NULL,
         \`numeroDeRG\` INT NULL DEFAULT 0,
         \`dataDeNascimento\` VARCHAR(45) NULL,
