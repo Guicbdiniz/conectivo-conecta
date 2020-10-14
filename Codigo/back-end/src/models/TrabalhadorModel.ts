@@ -1,197 +1,215 @@
 import sql from '../db'
 import {
-    Trabalhador,
-    ExperienciaProfissional,
-    Usuario,
+	Trabalhador,
+	ExperienciaProfissional,
+	Usuario,
+	TrabalhadorChanges
 } from '../types/TrabalhadorTypes'
 
 /**
  * Insert a new Trabalhador instance in MySQL database.
  */
 export function insert(
-    newTrabalhador: Trabalhador,
-    email: String
+	newTrabalhador: Trabalhador,
+	email: String
 ): Promise<Trabalhador> {
-    return new Promise(function (resolve, reject) {
-        const queryString = `INSERT INTO trabalhador SET ?`
+	return new Promise(function (resolve, reject) {
+		const queryString = `INSERT INTO trabalhador SET ?`
 
-        const workerWithEmail: Trabalhador = {...newTrabalhador, email: email}
+		const workerWithEmail: Trabalhador = { ...newTrabalhador, email: email }
 
-        sql.query(queryString, workerWithEmail, function (err, res) {
-            if (err) {
-                console.log('DB error: ', err)
-                return reject(err)
-            }
+		sql.query(queryString, workerWithEmail, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
 
-            console.log('New trabalhador was created!\n', workerWithEmail)
-            resolve(workerWithEmail)
-        })
-    })
+			console.log('New trabalhador was created!\n', workerWithEmail)
+			resolve(workerWithEmail)
+		})
+	})
 }
 
 /**
  * Insert a new Experiencia Profissional in MySQL database.
  */
 export function insertExperienciaProfissional(
-    newExperienciaProfissional: ExperienciaProfissional,
-    cpf: Number
+	newExperienciaProfissional: ExperienciaProfissional,
+	cpf: Number
 ): Promise<ExperienciaProfissional> {
-    return new Promise(function (resolve, reject) {
-        const queryString =
-            'INSERT INTO `experienciaprofissional` ' +
-            "(`cargo`, `local`, `trabalhador`) VALUES ('" +
-            newExperienciaProfissional.cargo +
-            "', '" +
-            newExperienciaProfissional.local +
-            "', '" +
-            cpf +
-            "');"
+	return new Promise(function (resolve, reject) {
+		const queryString =
+			'INSERT INTO `experienciaprofissional` ' +
+			"(`cargo`, `local`, `trabalhador`) VALUES ('" +
+			newExperienciaProfissional.cargo +
+			"', '" +
+			newExperienciaProfissional.local +
+			"', '" +
+			cpf +
+			"');"
 
-        sql.query(queryString, function (err, res) {
-            if (err) {
-                console.log('DB error: ', err)
-                return reject(err)
-            }
+		sql.query(queryString, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
 
-            console.log(
-                'New ExperienciaProfissional was created!',
-                newExperienciaProfissional
-            )
-            resolve(newExperienciaProfissional)
-        })
-    })
+			console.log(
+				'New ExperienciaProfissional was created!',
+				newExperienciaProfissional
+			)
+			resolve(newExperienciaProfissional)
+		})
+	})
 }
 
 /**
  * Insert a new usuario in MySQL database.
  */
 export function insertUsuario(usuario: Usuario): Promise<Usuario> {
-    return new Promise(function (resolve, reject) {
-        const queryString =
-            'INSERT INTO `usuario` ' +
-            "(`email`, `senha`) VALUES ('" +
-            usuario.email +
-            "', '" +
-            usuario.senha +
-            "');"
+	return new Promise(function (resolve, reject) {
+		const queryString =
+			'INSERT INTO `usuario` ' +
+			"(`email`, `senha`) VALUES ('" +
+			usuario.email +
+			"', '" +
+			usuario.senha +
+			"');"
 
-        sql.query(queryString, function (err, res) {
-            if (err) {
-                console.log('DB error: ', err)
-                return reject(err)
-            }
+		sql.query(queryString, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
 
-            console.log('New Usuario was created!', usuario)
-            resolve(usuario)
-        })
-    })
+			console.log('New Usuario was created!', usuario)
+			resolve(usuario)
+		})
+	})
 }
 
 /**
  * Find trabalhador by email and delete it by it's email on trabalhador table.
  */
 export function removeTrabalhador(email: String): Promise<String> {
-    return new Promise(function (resolve, reject) {
-        const trabalhadorQueryString =
-            'DELETE FROM `trabalhador` ' + "WHERE `email` = '" + email + "'"
-        const usuarioQueryString =
-            'DELETE FROM `usuario` ' + "WHERE `email` = '" + email + "'"
+	return new Promise(function (resolve, reject) {
+		const trabalhadorQueryString =
+			'DELETE FROM `trabalhador` ' + "WHERE `email` = '" + email + "'"
+		const usuarioQueryString =
+			'DELETE FROM `usuario` ' + "WHERE `email` = '" + email + "'"
 
-        sql.query(trabalhadorQueryString, function (err, res) {
-            if (err) {
-                console.log('DB error: ', err)
-                return reject(err)
-            }
+		sql.query(trabalhadorQueryString, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
 
-            console.log('Usuario deleted!', email)
-        })
+			console.log('Usuario deleted!', email)
+		})
 
-        sql.query(usuarioQueryString, function (err, res) {
-            if (err) {
-                console.log('DB error: ', err)
-                return reject(err)
-            }
+		sql.query(usuarioQueryString, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
 
-            console.log('Usuario deleted!', email)
-        })
-        resolve(email)
-    })
+			console.log('Usuario deleted!', email)
+		})
+		resolve(email)
+	})
 }
 
 /**
  * Select all workers from the DB with the passed email.
  */
 export function selectByEmail(email: String) {
-    return new Promise(function (resolve, reject) {
-        const queryString = `SELECT * FROM trabalhador WHERE email = '${email}';`
+	return new Promise(function (resolve, reject) {
+		const queryString = `SELECT * FROM trabalhador WHERE email = '${email}';`
 
-        sql.query(queryString, function (err, res) {
-            if (err) {
-                console.log('DB error: ', err)
-                return reject(err)
-            }
+		sql.query(queryString, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
 
-            if (res.length != 1) {
-                const errorMsg =
-                    'Select by email error: No Trabalhador was found with the passed email.'
-                console.log(errorMsg)
-                return reject(errorMsg)
-            }
+			if (res.length != 1) {
+				const errorMsg =
+					'Select by email error: No Trabalhador was found with the passed email.'
+				console.log(errorMsg)
+				return reject(errorMsg)
+			}
 
-            // Data is returned with "RowDataPacket" name. This was the only way I've found to remove it
-            const returnedTrabalhador = Object.values(
-                JSON.parse(JSON.stringify(res))
-            )[0]
+			// Data is returned with "RowDataPacket" name. This was the only way I've found to remove it
+			const returnedTrabalhador = Object.values(
+				JSON.parse(JSON.stringify(res))
+			)[0]
 
-            resolve(returnedTrabalhador)
-        })
-    })
+			resolve(returnedTrabalhador)
+		})
+	})
 }
 
 /**
  * Select User with the passed email.
  */
 export function selectUserByEmail(email: String) {
-    return new Promise(function (resolve, reject) {
-        const queryString = `SELECT * FROM usuario WHERE email = '${email}';`
+	return new Promise(function (resolve, reject) {
+		const queryString = `SELECT * FROM usuario WHERE email = '${email}';`
 
-        sql.query(queryString, function (err, res) {
-            if (err) {
-                console.log('DB error: ', err)
-                return reject(err)
-            }
+		sql.query(queryString, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
 
-            if (res.length != 1) {
-                const errorMsg =
-                    'Select by email error: No Usuario was found with the passed email.'
-                console.log(errorMsg)
-                return reject(errorMsg)
-            }
+			if (res.length != 1) {
+				const errorMsg =
+					'Select by email error: No Usuario was found with the passed email.'
+				console.log(errorMsg)
+				return reject(errorMsg)
+			}
 
-            // Data is returned with "RowDataPacket" name. This was the only way I've found to remove it
-            const returnedUser = Object.values(
-                JSON.parse(JSON.stringify(res))
-            )[0]
+			// Data is returned with "RowDataPacket" name. This was the only way I've found to remove it
+			const returnedUser = Object.values(JSON.parse(JSON.stringify(res)))[0]
 
-            resolve(returnedUser)
-        })
-    })
+			resolve(returnedUser)
+		})
+	})
 }
 
 /**
  * Select all Trabalhadores from the DB.
  */
 export function selectAllTrabalhadores() {
-    return new Promise(function (resolve, reject) {
-        const queryString = `SELECT * FROM trabalhador`
+	return new Promise(function (resolve, reject) {
+		const queryString = `SELECT * FROM trabalhador`
 
-        sql.query(queryString, function (err, res) {
-            if (err) {
-                console.log('DB error: ', err)
-                return reject(err)
-            }
+		sql.query(queryString, function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
 
-            resolve(res)
-        })
-    })
+			resolve(res)
+		})
+	})
+}
+
+/**
+ * Update a worker with the passed email with the passed changes in the DB.
+ */
+export function updateTrabalhador(email: string, changes: TrabalhadorChanges) {
+	return new Promise(function (resolve, reject) {
+		const queryString = 'UPDATE `trabalhador` SET ? WHERE `email` = ?;'
+
+		sql.query(queryString, [changes, email], function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
+
+			console.log('Trabalhador with email ' + email + ' updated!', changes)
+			resolve(email)
+		})
+	})
 }

@@ -1,4 +1,8 @@
-import { isTrabalhador, isUsuario } from '../types/TrabalhadorTypes'
+import {
+	isTrabalhador,
+	isTrabalhadorChanges,
+	isUsuario
+} from '../types/TrabalhadorTypes'
 
 /**
  * Check if request body for worker creation is valid.
@@ -13,4 +17,12 @@ export function createBodyIsValid(body: any): Boolean {
  */
 export function loginBodyIsValid(body: any): Boolean {
 	return body.email && body.senha
+}
+
+/**
+ * Check if request body for worker edit is valid.
+ */
+export function editBodyIsValid(body: any): Boolean {
+	const { changes } = body
+	return isTrabalhadorChanges(changes)
 }
