@@ -4,7 +4,8 @@ import {
 	login,
 	getTrabalhador,
 	deleteTrabalhador,
-	getAllTrabalhadores
+	getAllTrabalhadores,
+	editTrabalhador
 } from '../controllers/TrabalhadorController'
 import { checkTrabalhador, checkUsuario } from '../middlewares/DatabaseCheckers'
 import { authenticateJWTToken } from '../middlewares/TokenAuth'
@@ -21,5 +22,6 @@ router.post('/login/', login)
 router.get('/:email', authenticateJWTToken, getTrabalhador)
 router.delete('/:email', authenticateJWTToken, deleteTrabalhador)
 router.get('/', authenticateJWTToken, getAllTrabalhadores)
+router.put('/:email', authenticateJWTToken, editTrabalhador)
 
 export default router
