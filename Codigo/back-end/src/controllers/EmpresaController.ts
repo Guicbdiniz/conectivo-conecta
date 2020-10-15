@@ -1,24 +1,24 @@
 import { Request, Response } from 'express'
-import {
-	insert,
-	selectAllTrabalhadores,
-	selectByEmail,
-	removeTrabalhador,
-	updateTrabalhador
-} from '../models/TrabalhadorModel'
 import { insertConta, selectContaByEmail } from '../models/ContaModels'
-import { Trabalhador, TrabalhadorChanges } from '../types/TrabalhadorTypes'
 import { Conta } from '../types/ContaTypes'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import {
 	createBodyIsValid,
 	editBodyIsValid,
 	loginBodyIsValid
-} from '../validators/TrabalhadorValidators'
-import jwt from 'jsonwebtoken'
+} from '../validators/EmpresaValidators'
+import { Empresa, EmpresaChanges } from '../types/EmpresaTypes'
+import {
+	insert,
+	removeEmpresa,
+	selectAllEmpresas,
+	selectByEmail,
+	updateEmpresa
+} from '../models/EmpresaModels'
 
 /**
- * Create worker Controller.
+ * Create company Controller.
  *
  * The request body must contain all the woker's attribute, along with an array with the working experience and an account obejct.
  */
@@ -31,7 +31,7 @@ export async function create(req: Request, res: Response) {
 	}
 
 	const newConta: Conta = { ...req.body.conta }
-	const newTrabalhador: Trabalhador = { ...req.body.trabalhador }
+	const empresa: Empresa = { ...req.body.empresa }
 
 	const hashedPassword = await bcrypt.hash(newConta.senha, 10)
 	newConta.senha = hashedPassword
@@ -39,11 +39,11 @@ export async function create(req: Request, res: Response) {
 	try {
 		await insertConta(newConta)
 
-		await insert(newTrabalhador, newConta.email)
+		await insert(empresa, newConta.email)
 
 		res.status(200).json({
 			message: 'Trabalhador created!',
-			trabalhador: newTrabalhador,
+			empresa: empresa,
 			conta: newConta
 		})
 	} catch (err) {
@@ -69,7 +69,7 @@ export async function login(req: Request, res: Response) {
 	const { email, senha } = req.body
 
 	try {
-		const selectedTrabalhador = (await selectByEmail(email)) as Trabalhador
+		const selectedEmpresa = (await selectByEmail(email)) as Empresa
 		const selectedAccount = (await selectContaByEmail(email)) as Conta
 
 		// Password check
@@ -80,7 +80,7 @@ export async function login(req: Request, res: Response) {
 				throw new Error('Secret JWT key was not defined')
 			}
 
-			const accessToken = jwt.sign(selectedTrabalhador, secretJWTKey as string)
+			const accessToken = jwt.sign(selectedEmpresa, secretJWTKey as string)
 
 			res.status(200).json({
 				message: 'Account authenticated with success',
@@ -99,18 +99,18 @@ export async function login(req: Request, res: Response) {
 }
 
 /**
- * Get Trabalhador Controller.
+ * Get Empresa Controller.
  */
-export async function getTrabalhador(req: Request, res: Response) {
+export async function getEmpresa(req: Request, res: Response) {
 	const { email } = req.params
 
 	try {
-		const trabalhador = (await selectByEmail(email)) as Trabalhador
+		const empresa = (await selectByEmail(email)) as Empresa
 		const conta = (await selectContaByEmail(email)) as Conta
 
 		res.status(200).json({
-			message: 'Trabalhador getted!',
-			trabalhador: trabalhador,
+			message: 'Empresas getted!',
+			empresa: empresa,
 			conta: conta
 		})
 	} catch (err) {
@@ -121,16 +121,16 @@ export async function getTrabalhador(req: Request, res: Response) {
 }
 
 /**
- * Delete trabalhador controller.
+ * Delete empresa controller.
  */
-export async function deleteTrabalhador(req: Request, res: Response) {
+export async function deleteEmpresa(req: Request, res: Response) {
 	const { email } = req.params
 
 	try {
-		await removeTrabalhador(email)
+		await removeEmpresa(email)
 
 		res.status(200).json({
-			message: `Trabalhador with email: ${email} deleted!`
+			message: `Empresa with email: ${email} deleted!`
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -140,15 +140,15 @@ export async function deleteTrabalhador(req: Request, res: Response) {
 }
 
 /**
- * Get all trabalhadores controller.
+ * Get all empresas controller.
  */
-export async function getAllTrabalhadores(req: Request, res: Response) {
+export async function getAllEmpresas(req: Request, res: Response) {
 	try {
-		const allTrabalhadores = (await selectAllTrabalhadores()) as Trabalhador[]
+		const allEmpresas = (await selectAllEmpresas()) as Empresa[]
 
 		res.status(200).json({
-			message: 'Trabalhadores getted!',
-			trabalhadores: allTrabalhadores
+			message: 'Empresas getted!',
+			empresas: allEmpresas
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -158,9 +158,9 @@ export async function getAllTrabalhadores(req: Request, res: Response) {
 }
 
 /**
- * Edit a trabalhador controller.
+ * Edit a empresa controller.
  */
-export async function editTrabalhador(req: Request, res: Response) {
+export async function editEmpresa(req: Request, res: Response) {
 	try {
 		if (!editBodyIsValid(req.body)) {
 			return res.status(400).json({
@@ -169,14 +169,14 @@ export async function editTrabalhador(req: Request, res: Response) {
 		}
 
 		const { email } = req.params
-		const changes = req.body.changes as TrabalhadorChanges
+		const changes = req.body.changes as EmpresaChanges
 
-		await updateTrabalhador(email, changes as TrabalhadorChanges)
-		const trabalhador = (await selectByEmail(email)) as Trabalhador
+		await updateEmpresa(email, changes as EmpresaChanges)
+		const empresa = (await selectByEmail(email)) as Empresa
 
 		res.status(200).json({
-			message: 'Trabalhador with email ' + email + ' updated with success!',
-			trabalhador: trabalhador
+			message: 'Empresa with email ' + email + ' updated with success!',
+			empresa: empresa
 		})
 	} catch (err) {
 		res.status(500).json({
