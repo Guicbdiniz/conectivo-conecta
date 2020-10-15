@@ -7,16 +7,11 @@ import {
 	getAllTrabalhadores,
 	editTrabalhador
 } from '../controllers/TrabalhadorController'
-import { checkTrabalhador, checkUsuario } from '../middlewares/DatabaseCheckers'
 import { authenticateJWTToken } from '../middlewares/TokenAuth'
 
 const router = Router()
 
-// Middleware to check DB tables.
-// Do not use them in production.
-router.use(checkUsuario)
-router.use(checkTrabalhador)
-
+// Routes
 router.post('/register/', create)
 router.post('/login/', login)
 router.get('/:email', authenticateJWTToken, getTrabalhador)
