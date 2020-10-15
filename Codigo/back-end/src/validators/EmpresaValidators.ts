@@ -1,12 +1,12 @@
-import { isTrabalhador, isTrabalhadorChanges } from '../types/TrabalhadorTypes'
+import { isEmpresa, isEmpresaChanges } from '../types/EmpresaTypes'
 import { isConta } from '../types/ContaTypes'
 
 /**
- * Check if request body for worker creation is valid.
+ * Check if request body for company creation is valid.
  */
 export function createBodyIsValid(body: any): Boolean {
-	const { trabalhador, conta } = body
-	return isTrabalhador(trabalhador) && isConta(conta)
+	const { empresa, conta } = body
+	return isEmpresa(empresa) && isConta(conta)
 }
 
 /**
@@ -17,9 +17,9 @@ export function loginBodyIsValid(body: any): Boolean {
 }
 
 /**
- * Check if request body for worker edit is valid.
+ * Check if request body for company edit is valid.
  */
 export function editBodyIsValid(body: any): Boolean {
 	const { changes } = body
-	return isTrabalhadorChanges(changes)
+	return isEmpresaChanges(changes)
 }

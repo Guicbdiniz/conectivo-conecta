@@ -1,5 +1,19 @@
 import { Request, Response, NextFunction } from 'express'
-import sql from '../db'
+import mysql from 'mysql'
+
+const HOST = process.env.DB_HOST || 'localhost'
+const USER = process.env.DB_USER || 'root'
+const PASSWORD = process.env.DB_PASSWORD || ''
+const DATABASE_NAME = process.env.DB_NAME || 'conectivo_conecta_db'
+
+const sql = mysql.createPool({
+	host: HOST,
+	user: USER,
+	password: PASSWORD,
+	database: DATABASE_NAME,
+	insecureAuth: true,
+	multipleStatements: true
+})
 
 const queryString = `CREATE DATABASE IF NOT EXISTS conectivo_conecta_db;
 
