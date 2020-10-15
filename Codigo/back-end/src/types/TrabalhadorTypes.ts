@@ -16,6 +16,8 @@ export interface Trabalhador {
 	escolaridade: String
 	objetivoProfissional: String
 	resumoProfissional: String
+	caminhoParaCurriculo?: String
+	caminhoParaImagem?: String
 }
 
 /**
@@ -58,70 +60,32 @@ export function isTrabalhador(object: any): object is Trabalhador {
 }
 
 /**
- * Working experience interface.
+ * Account info interface
  */
-export interface ExperienciaProfissional {
-	cargo: String
-	local: String
-}
-
-/**
- * Check if object agress with the working experience interface.
- */
-export function isExperienciaProfissional(
-	object: any
-): object is ExperienciaProfissional {
-	if (object === null || object === undefined) {
-		return false
-	}
-
-	const ExperienciasProperties: { [key: string]: string } = {
-		cargo: '[object String]',
-		local: '[object String]'
-	}
-
-	for (const propertyName in ExperienciasProperties) {
-		if (
-			!(
-				propertyName in object &&
-				Object.prototype.toString.call(object[propertyName]) ===
-					ExperienciasProperties[propertyName]
-			)
-		) {
-			return false
-		}
-	}
-
-	return true
-}
-
-/**
- * User info interface
- */
-export interface Usuario {
+export interface Conta {
 	email: String
 	senha: String
 }
 
 /**
- * Check if object agrees with the user interface
+ * Check if object agrees with the account interface
  */
-export function isUsuario(object: any): object is Usuario {
+export function isConta(object: any): object is Conta {
 	if (object === null || object === undefined) {
 		return false
 	}
 
-	const UsuarioProperties: { [key: string]: string } = {
+	const ContaProperties: { [key: string]: string } = {
 		email: '[object String]',
 		senha: '[object String]'
 	}
 
-	for (const propertyName in UsuarioProperties) {
+	for (const propertyName in ContaProperties) {
 		if (
 			!(
 				propertyName in object &&
 				Object.prototype.toString.call(object[propertyName]) ===
-					UsuarioProperties[propertyName]
+					ContaProperties[propertyName]
 			)
 		) {
 			return false

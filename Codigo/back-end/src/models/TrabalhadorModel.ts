@@ -1,8 +1,7 @@
 import sql from '../db'
 import {
 	Trabalhador,
-	ExperienciaProfissional,
-	Usuario,
+	Conta,
 	TrabalhadorChanges
 } from '../types/TrabalhadorTypes'
 
@@ -31,59 +30,20 @@ export function insert(
 }
 
 /**
- * Insert a new Experiencia Profissional in MySQL database.
+ * Insert a new account in MySQL database.
  */
-export function insertExperienciaProfissional(
-	newExperienciaProfissional: ExperienciaProfissional,
-	cpf: Number
-): Promise<ExperienciaProfissional> {
+export function insertConta(conta: Conta): Promise<Conta> {
 	return new Promise(function (resolve, reject) {
-		const queryString =
-			'INSERT INTO `experienciaprofissional` ' +
-			"(`cargo`, `local`, `trabalhador`) VALUES ('" +
-			newExperienciaProfissional.cargo +
-			"', '" +
-			newExperienciaProfissional.local +
-			"', '" +
-			cpf +
-			"');"
+		const queryString = 'INSERT INTO `conta` SET ?'
 
-		sql.query(queryString, function (err, res) {
+		sql.query(queryString, conta, function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
 				return reject(err)
 			}
 
-			console.log(
-				'New ExperienciaProfissional was created!',
-				newExperienciaProfissional
-			)
-			resolve(newExperienciaProfissional)
-		})
-	})
-}
-
-/**
- * Insert a new usuario in MySQL database.
- */
-export function insertUsuario(usuario: Usuario): Promise<Usuario> {
-	return new Promise(function (resolve, reject) {
-		const queryString =
-			'INSERT INTO `usuario` ' +
-			"(`email`, `senha`) VALUES ('" +
-			usuario.email +
-			"', '" +
-			usuario.senha +
-			"');"
-
-		sql.query(queryString, function (err, res) {
-			if (err) {
-				console.log('DB error: ', err)
-				return reject(err)
-			}
-
-			console.log('New Usuario was created!', usuario)
-			resolve(usuario)
+			console.log('New Conta was created!', conta)
+			resolve(conta)
 		})
 	})
 }
@@ -94,26 +54,25 @@ export function insertUsuario(usuario: Usuario): Promise<Usuario> {
 export function removeTrabalhador(email: String): Promise<String> {
 	return new Promise(function (resolve, reject) {
 		const trabalhadorQueryString =
-			'DELETE FROM `trabalhador` ' + "WHERE `email` = '" + email + "'"
-		const usuarioQueryString =
-			'DELETE FROM `usuario` ' + "WHERE `email` = '" + email + "'"
+			'DELETE FROM `trabalhador` WHERE `email` = ?;'
+		const contaQueryString = 'DELETE FROM `conta` "WHERE `email` = ?;'
 
-		sql.query(trabalhadorQueryString, function (err, res) {
+		sql.query(trabalhadorQueryString, [email], function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
 				return reject(err)
 			}
 
-			console.log('Usuario deleted!', email)
+			console.log('Trabalhador deleted!', email)
 		})
 
-		sql.query(usuarioQueryString, function (err, res) {
+		sql.query(contaQueryString, [email], function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
 				return reject(err)
 			}
 
-			console.log('Usuario deleted!', email)
+			console.log('Conta deleted!', email)
 		})
 		resolve(email)
 	})
@@ -124,9 +83,9 @@ export function removeTrabalhador(email: String): Promise<String> {
  */
 export function selectByEmail(email: String) {
 	return new Promise(function (resolve, reject) {
-		const queryString = `SELECT * FROM trabalhador WHERE email = '${email}';`
+		const queryString = 'SELECT * FROM `trabalhador` WHERE email = ?;'
 
-		sql.query(queryString, function (err, res) {
+		sql.query(queryString, [email], function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
 				return reject(err)
@@ -150,13 +109,13 @@ export function selectByEmail(email: String) {
 }
 
 /**
- * Select User with the passed email.
+ * Select Account with the passed email.
  */
-export function selectUserByEmail(email: String) {
+export function selectAccountByEmail(email: String) {
 	return new Promise(function (resolve, reject) {
-		const queryString = `SELECT * FROM usuario WHERE email = '${email}';`
+		const queryString = 'SELECT * FROM `conta` WHERE email = ?;'
 
-		sql.query(queryString, function (err, res) {
+		sql.query(queryString, [email], function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
 				return reject(err)
@@ -164,15 +123,15 @@ export function selectUserByEmail(email: String) {
 
 			if (res.length != 1) {
 				const errorMsg =
-					'Select by email error: No Usuario was found with the passed email.'
+					'Select by email error: No account was found with the passed email.'
 				console.log(errorMsg)
 				return reject(errorMsg)
 			}
 
 			// Data is returned with "RowDataPacket" name. This was the only way I've found to remove it
-			const returnedUser = Object.values(JSON.parse(JSON.stringify(res)))[0]
+			const returnedAccount = Object.values(JSON.parse(JSON.stringify(res)))[0]
 
-			resolve(returnedUser)
+			resolve(returnedAccount)
 		})
 	})
 }

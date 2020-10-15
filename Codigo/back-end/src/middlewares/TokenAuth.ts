@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-import { Trabalhador } from '../types/TrabalhadorTypes'
 
 /**
  * Middleware to authenticate if the JWT token passed in the request is valid.

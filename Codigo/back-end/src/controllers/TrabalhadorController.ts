@@ -1,17 +1,17 @@
 import { Request, Response } from 'express'
 import {
 	insert,
-	insertUsuario,
+	insertConta,
 	selectAllTrabalhadores,
 	selectByEmail,
-	selectUserByEmail,
+	selectAccountByEmail,
 	removeTrabalhador,
 	updateTrabalhador
 } from '../models/TrabalhadorModel'
 import {
 	Trabalhador,
 	TrabalhadorChanges,
-	Usuario
+	Conta
 } from '../types/TrabalhadorTypes'
 import bcrypt from 'bcrypt'
 import {
@@ -24,7 +24,7 @@ import jwt from 'jsonwebtoken'
 /**
  * Create worker Controller.
  *
- * The request body must contain all the woker's attribute, along with an array with the working experience and a user obejct.
+ * The request body must contain all the woker's attribute, along with an array with the working experience and an account obejct.
  */
 export async function create(req: Request, res: Response) {
 	if (createBodyIsValid(req.body)) {
@@ -34,21 +34,21 @@ export async function create(req: Request, res: Response) {
 		return
 	}
 
-	const newUsuario: Usuario = { ...req.body.usuario }
+	const newConta: Conta = { ...req.body.conta }
 	const newTrabalhador: Trabalhador = { ...req.body.trabalhador }
 
-	const hashedPassword = await bcrypt.hash(newUsuario.senha, 10)
-	newUsuario.senha = hashedPassword
+	const hashedPassword = await bcrypt.hash(newConta.senha, 10)
+	newConta.senha = hashedPassword
 
 	try {
-		await insertUsuario(newUsuario)
+		await insertConta(newConta)
 
-		await insert(newTrabalhador, newUsuario.email)
+		await insert(newTrabalhador, newConta.email)
 
 		res.status(200).json({
 			message: 'Trabalhador created!',
 			trabalhador: newTrabalhador,
-			usuario: newUsuario
+			conta: newConta
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -56,24 +56,6 @@ export async function create(req: Request, res: Response) {
 		})
 	}
 }
-
-/**
- * Call multiple insertions of ExperienciasProfissionais, returning any errors.
- *
- * DEPRECATED
- */
-// async function createMultipleExperienciasProfissionais(
-// 	experienciasProfissionais: ExperienciaProfissional[],
-// 	cpf: Number
-// ) {
-// 	try {
-// 		for (const experiencia of experienciasProfissionais) {
-// 			await insertExperienciaProfissional(experiencia, cpf)
-// 		}
-// 	} catch (err) {
-// 		throw new Error(err)
-// 	}
-// }
 
 /**
  * Login controller.
@@ -92,10 +74,10 @@ export async function login(req: Request, res: Response) {
 
 	try {
 		const selectedTrabalhador = (await selectByEmail(email)) as Trabalhador
-		const selectedUsuario = (await selectUserByEmail(email)) as Usuario
+		const selectedAccount = (await selectAccountByEmail(email)) as Conta
 
 		// Password check
-		if (await bcrypt.compare(senha, selectedUsuario.senha.toString())) {
+		if (await bcrypt.compare(senha, selectedAccount.senha.toString())) {
 			const secretJWTKey = process.env.ACCESS_TOKEN_SECRET
 
 			if (secretJWTKey === undefined) {
@@ -105,7 +87,7 @@ export async function login(req: Request, res: Response) {
 			const accessToken = jwt.sign(selectedTrabalhador, secretJWTKey as string)
 
 			res.status(200).json({
-				message: 'User authenticated with success',
+				message: 'Account authenticated with success',
 				token: accessToken
 			})
 		} else {
@@ -122,19 +104,18 @@ export async function login(req: Request, res: Response) {
 
 /**
  * Get Trabalhador Controller.
- *
  */
 export async function getTrabalhador(req: Request, res: Response) {
 	const { email } = req.params
 
 	try {
 		const trabalhador = (await selectByEmail(email)) as Trabalhador
-		const usuario = (await selectUserByEmail(email)) as Usuario
+		const conta = (await selectAccountByEmail(email)) as Conta
 
 		res.status(200).json({
 			message: 'Trabalhador getted!',
 			trabalhador: trabalhador,
-			usuario: usuario
+			conta: conta
 		})
 	} catch (err) {
 		res.status(500).json({

@@ -1,15 +1,15 @@
 import {
 	isTrabalhador,
 	isTrabalhadorChanges,
-	isUsuario
+	isConta
 } from '../types/TrabalhadorTypes'
 
 /**
  * Check if request body for worker creation is valid.
  */
 export function createBodyIsValid(body: any): Boolean {
-	const { trabalhador, usuario } = body
-	return isTrabalhador(trabalhador) && isUsuario(usuario)
+	const { trabalhador, conta } = body
+	return isTrabalhador(trabalhador) && isConta(conta)
 }
 
 /**
