@@ -23,8 +23,7 @@ export function isEmpresa(object: any): object is Empresa {
 		cnpj: '[object String]',
 		razaoSocial: '[object String]',
 		site: '[object String]',
-		telefoneDeContato: '[object String]',
-		eValido: '[object Boolean]'
+		telefoneDeContato: '[object String]'
 	}
 
 	for (const propertyName in EmpresaProperties) {

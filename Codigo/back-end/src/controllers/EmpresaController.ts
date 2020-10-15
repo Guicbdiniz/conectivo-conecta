@@ -23,7 +23,7 @@ import {
  * The request body must contain all the woker's attribute, along with an array with the working experience and an account obejct.
  */
 export async function create(req: Request, res: Response) {
-	if (createBodyIsValid(req.body)) {
+	if (!createBodyIsValid(req.body)) {
 		res.status(400).json({
 			message: 'Error: Incorrect request body.'
 		})
