@@ -29,7 +29,7 @@ export function isTrabalhador(object: any): object is Trabalhador {
 	}
 
 	const TrabalhadorProperties: { [key: string]: string } = {
-		cpf: '[object Number]',
+		cpf: '[object String]',
 		nomeCompleto: '[object String]',
 		nomeCompletoMae: '[object String]',
 		numeroDeRG: '[object Number]',
