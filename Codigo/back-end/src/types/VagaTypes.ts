@@ -59,7 +59,7 @@ export interface VagaChanges {
 /**
  * Check if object agrees with vaga changes's interface.
  */
-export function isEmpresaChanges(object: any): object is VagaChanges {
+export function isVagaChanges(object: any): object is VagaChanges {
 	if (object === null || object === undefined) {
 		return false
 	}
