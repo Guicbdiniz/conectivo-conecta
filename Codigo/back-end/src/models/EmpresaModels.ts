@@ -23,7 +23,7 @@ export function insert(empresa: Empresa, email: String): Promise<Empresa> {
 }
 
 /**
- * Find empresa by email and delete it by it's email on trabalhador table.
+ * Find empresa by email and delete it.
  */
 export function removeEmpresa(email: String): Promise<String> {
 	return new Promise(function (resolve, reject) {
