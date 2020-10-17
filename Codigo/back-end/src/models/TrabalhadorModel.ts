@@ -137,7 +137,7 @@ export function selectAllTrabalhadoresFromInscricao(idDaVaga: Number) {
 		sql.query(queryString, [idDaVaga], function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
-				reject(err)
+				return reject(err)
 			}
 
 			console.log(
