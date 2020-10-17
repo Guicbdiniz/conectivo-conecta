@@ -11,7 +11,7 @@ export function InsertInscricao(idDaVaga: Number, cpfTrabalhador: String) {
 		sql.query(queryString, [idDaVaga, cpfTrabalhador], function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
-				reject(err)
+				return reject(err)
 			}
 
 			console.log(
