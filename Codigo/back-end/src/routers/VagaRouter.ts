@@ -1,10 +1,11 @@
 import { Router } from 'express'
-import { createVaga } from '../controllers/VagaControllers'
+import { createVaga, deleteVaga } from '../controllers/VagaControllers'
 import { authenticateJWTToken } from '../middlewares/TokenAuth'
 
 const router = Router()
 
 //Routes
-router.post('/', createVaga)
+router.post('/', authenticateJWTToken, createVaga)
+router.delete('/:idVaga', authenticateJWTToken, deleteVaga)
 
 export default router
