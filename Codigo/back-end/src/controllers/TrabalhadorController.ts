@@ -4,9 +4,10 @@ import {
 	selectAllTrabalhadores,
 	selectByEmail,
 	removeTrabalhador,
-	updateTrabalhador
+	updateTrabalhador,
+	selectAllTrabalhadoresFromInscricao
 } from '../models/TrabalhadorModel'
-import { insertConta, selectContaByEmail } from '../models/ContaModels'
+import { insertConta, selectContaByEmail } from '../models/ContaModel'
 import { Trabalhador, TrabalhadorChanges } from '../types/TrabalhadorTypes'
 import { Conta } from '../types/ContaTypes'
 import bcrypt from 'bcrypt'
@@ -177,6 +178,36 @@ export async function editTrabalhador(req: Request, res: Response) {
 		res.status(200).json({
 			message: 'Trabalhador with email ' + email + ' updated with success!',
 			trabalhador: trabalhador
+		})
+	} catch (err) {
+		res.status(500).json({
+			message: 'Error: ' + err
+		})
+	}
+}
+
+/**
+ * Get all trabalhadores related to vaga controller.
+ */
+export async function getAllTrabalhadoresFromVaga(req: Request, res: Response) {
+	try {
+		const { idDaVaga } = req.params
+		if (!idDaVaga) {
+			res.status(400).json({
+				message: 'No id from vaga was found!'
+			})
+		}
+
+		const idDaVagaAsNumber = parseInt(idDaVaga)
+
+		const allTrabalhadoresFromVaga = (await selectAllTrabalhadoresFromInscricao(
+			idDaVagaAsNumber
+		)) as Trabalhador[]
+
+		res.status(200).json({
+			message:
+				'Trabalhadores from vaga with id ' + idDaVaga + ' getted with success!',
+			trabalhadores: allTrabalhadoresFromVaga
 		})
 	} catch (err) {
 		res.status(500).json({

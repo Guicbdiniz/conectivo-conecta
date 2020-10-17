@@ -8,6 +8,8 @@ import bodyParser from 'body-parser'
 
 import TrabalhadorRouter from './routers/TrabalhadorRouter'
 import EmpresaRouter from './routers/EmpresaRouter'
+import VagaRouter from './routers/VagaRouter'
+import InscricaoRouter from './routers/InscricaoRouter'
 import { checkDatabase } from './middlewares/DatabaseCheckers'
 
 const app = express()
@@ -20,5 +22,7 @@ app.use(checkDatabase)
 // Routes
 app.use('/trabalhador', TrabalhadorRouter)
 app.use('/empresa', EmpresaRouter)
+app.use('/vaga', VagaRouter)
+app.use('/inscricao', InscricaoRouter)
 
 export default app
