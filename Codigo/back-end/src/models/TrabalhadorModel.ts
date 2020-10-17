@@ -121,3 +121,31 @@ export function updateTrabalhador(email: string, changes: TrabalhadorChanges) {
 		})
 	})
 }
+
+/**
+ * Select from DB all trabalhadores related to a inscricao from the vaga with the specified ID.
+ */
+export function selectAllTrabalhadoresFromInscricao(idDaVaga: Number) {
+	return new Promise(function (resolve, reject) {
+		const queryString =
+			'SELECT T.cpf, T.nomeCompleto, T.nomeCompletoMae, T.numeroDeRg, T.dataDeNascimento,' +
+			'T.localDeNascimento, T.estadoCivil, T.numeroDeFilhos, T.telefoneDeContato, T.endereco, ' +
+			'T.escolaridade, T.objetivoProfissional, T.resumoProfissional, T.email, T.caminhoParaImagem, ' +
+			'T.caminhoParaCurriculo FROM `trabalhador` T, `vaga` V, `inscricaovagatrabalhador` I WHERE ' +
+			'(T.cpf = I.cpfTrabalhador) AND (I.idDaVaga = V.id) AND (V.id = ?)'
+
+		sql.query(queryString, [idDaVaga], function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				reject(err)
+			}
+
+			console.log(
+				'All trabalhadores from inscricao from vaga with id ' +
+					idDaVaga +
+					' getted!'
+			)
+			resolve(idDaVaga)
+		})
+	})
+}
