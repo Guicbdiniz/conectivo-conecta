@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { insertConta, selectContaByEmail } from '../models/ContaModels'
+import { insertConta, selectContaByEmail } from '../models/ContaModel'
 import { Conta } from '../types/ContaTypes'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -15,7 +15,7 @@ import {
 	selectAllEmpresas,
 	selectByEmail,
 	updateEmpresa
-} from '../models/EmpresaModels'
+} from '../models/EmpresaModel'
 
 /**
  * Create company Controller.

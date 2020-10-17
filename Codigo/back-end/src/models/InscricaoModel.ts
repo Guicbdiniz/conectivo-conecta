@@ -1,5 +1,4 @@
 import sql from '../db'
-import { Inscricao } from '../types/InscricaoTypes'
 
 /**
  * Insert a new inscricao with the passed vaga id and trabalhador cpf.

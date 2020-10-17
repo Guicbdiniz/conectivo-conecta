@@ -6,7 +6,7 @@ import {
 	getAllVagas,
 	getAllVagasByCNPJ,
 	getVagaById
-} from '../controllers/VagaControllers'
+} from '../controllers/VagaController'
 import { authenticateJWTToken } from '../middlewares/TokenAuth'
 
 const router = Router()

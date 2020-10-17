@@ -7,7 +7,7 @@ import {
 	updateTrabalhador,
 	selectAllTrabalhadoresFromInscricao
 } from '../models/TrabalhadorModel'
-import { insertConta, selectContaByEmail } from '../models/ContaModels'
+import { insertConta, selectContaByEmail } from '../models/ContaModel'
 import { Trabalhador, TrabalhadorChanges } from '../types/TrabalhadorTypes'
 import { Conta } from '../types/ContaTypes'
 import bcrypt from 'bcrypt'

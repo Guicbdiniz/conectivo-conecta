@@ -10,7 +10,7 @@ import {
 	selectAllVagasFromCNPJ,
 	selectVagaByID,
 	updateVaga
-} from '../models/VagaModels'
+} from '../models/VagaModel'
 import { Vaga, VagaChanges } from '../types/VagaTypes'
 
 /**
