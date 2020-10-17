@@ -3,7 +3,7 @@
  */
 export interface Vaga {
 	id?: Number
-	cnpjDaEmpresa?: String
+	cnpjDaEmpresa: String
 	titulo: String
 	descricao: String
 	salario: Number
@@ -20,6 +20,7 @@ export function isVaga(object: any): object is Vaga {
 	}
 
 	const VagaProperties: { [key: string]: string } = {
+		cnpjDaEmpresa: '[object String]',
 		titulo: '[object String]',
 		descricao: '[object String]',
 		salario: '[object Number]',

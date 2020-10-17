@@ -4,20 +4,18 @@ import { Vaga, VagaChanges } from '../types/VagaTypes'
 /**
  * Insert a new Vaga instance in MySQL database.
  */
-export function insert(vaga: Vaga, cnpjDaEmpresa: String): Promise<Vaga> {
+export function insertVaga(vaga: Vaga): Promise<Vaga> {
 	return new Promise(function (resolve, reject) {
 		const queryString = 'INSERT INTO vaga SET ?'
 
-		const vagaWithCNPJ: Vaga = { ...vaga, cnpjDaEmpresa: cnpjDaEmpresa }
-
-		sql.query(queryString, [vagaWithCNPJ], function (err, res) {
+		sql.query(queryString, [vaga], function (err, res) {
 			if (err) {
 				console.log('DB error: ', err)
 				return reject(err)
 			}
 
-			console.log('New vaag was created!\n', vagaWithCNPJ)
-			resolve(vagaWithCNPJ)
+			console.log('New vaag was created!\n', vaga)
+			resolve(vaga)
 		})
 	})
 }
