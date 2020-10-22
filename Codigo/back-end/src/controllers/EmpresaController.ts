@@ -41,10 +41,14 @@ export async function create(req: Request, res: Response) {
 
 		await insert(empresa, newConta.email)
 
+		const secretJWTKey = process.env.ACCESS_TOKEN_SECRET
+		const accessToken = jwt.sign(empresa, secretJWTKey as string)
+
 		res.status(200).json({
 			message: 'Trabalhador created!',
 			empresa: empresa,
-			conta: newConta
+			conta: newConta,
+			token: accessToken
 		})
 	} catch (err) {
 		res.status(500).json({
