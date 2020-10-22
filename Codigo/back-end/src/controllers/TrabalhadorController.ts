@@ -17,6 +17,7 @@ import {
 	loginBodyIsValid
 } from '../validators/TrabalhadorValidators'
 import jwt from 'jsonwebtoken'
+import { TrabalhadorNotFoundException } from '../types/Exceptions'
 
 /**
  * Create worker Controller.
@@ -42,10 +43,14 @@ export async function create(req: Request, res: Response) {
 
 		await insert(newTrabalhador, newConta.email)
 
+		const secretJWTKey = process.env.ACCESS_TOKEN_SECRET
+		const accessToken = jwt.sign(newTrabalhador, secretJWTKey as string)
+
 		res.status(200).json({
 			message: 'Trabalhador created!',
 			trabalhador: newTrabalhador,
-			conta: newConta
+			conta: newConta,
+			token: accessToken
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -88,14 +93,20 @@ export async function login(req: Request, res: Response) {
 				token: accessToken
 			})
 		} else {
-			res.status(400).json({
+			res.status(401).json({
 				message: 'Error: invalid password.'
 			})
 		}
 	} catch (err) {
-		res.status(500).json({
-			message: 'Error: ' + err
-		})
+		if (err instanceof TrabalhadorNotFoundException) {
+			res.status(404).json({
+				message: 'Error: trabalhador not found!'
+			})
+		} else {
+			res.status(500).json({
+				message: 'Error: ' + err
+			})
+		}
 	}
 }
 

@@ -1,5 +1,6 @@
 import sql from '../db'
 import { Trabalhador, TrabalhadorChanges } from '../types/TrabalhadorTypes'
+import { TrabalhadorNotFoundException } from '../types/Exceptions'
 
 /**
  * Insert a new Trabalhador instance in MySQL database.
@@ -72,7 +73,7 @@ export function selectByEmail(email: String) {
 				const errorMsg =
 					'Select by email error: No Trabalhador was found with the passed email.'
 				console.log(errorMsg)
-				return reject(errorMsg)
+				return reject(new TrabalhadorNotFoundException())
 			}
 
 			// Data is returned with "RowDataPacket" name. This was the only way I've found to remove it

@@ -4,8 +4,8 @@
 export interface Empresa {
 	cnpj: String
 	razaoSocial: String
-	site: String
-	telefoneDeContato: String
+	site?: String
+	telefoneDeContato?: String
 	email?: String
 	eValido: Boolean
 	caminhoParaImagem?: String
@@ -21,9 +21,7 @@ export function isEmpresa(object: any): object is Empresa {
 
 	const EmpresaProperties: { [key: string]: string } = {
 		cnpj: '[object String]',
-		razaoSocial: '[object String]',
-		site: '[object String]',
-		telefoneDeContato: '[object String]'
+		razaoSocial: '[object String]'
 	}
 
 	for (const propertyName in EmpresaProperties) {
