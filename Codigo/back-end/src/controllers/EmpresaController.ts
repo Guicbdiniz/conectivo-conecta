@@ -16,6 +16,7 @@ import {
 	selectByEmail,
 	updateEmpresa
 } from '../models/EmpresaModel'
+import { EmpresaNotFoundException } from '../types/Exceptions'
 
 /**
  * Create company Controller.
@@ -91,14 +92,20 @@ export async function login(req: Request, res: Response) {
 				token: accessToken
 			})
 		} else {
-			res.status(400).json({
+			res.status(401).json({
 				message: 'Error: invalid password.'
 			})
 		}
 	} catch (err) {
-		res.status(500).json({
-			message: 'Error: ' + err
-		})
+		if (err instanceof EmpresaNotFoundException) {
+			res.status(404).json({
+				message: 'Error: trabalhador not found!'
+			})
+		} else {
+			res.status(500).json({
+				message: 'Error: ' + err
+			})
+		}
 	}
 }
 

@@ -1,5 +1,6 @@
 import sql from '../db'
 import { Empresa, EmpresaChanges } from '../types/EmpresaTypes'
+import { EmpresaNotFoundException } from '../types/Exceptions'
 
 /**
  * Insert a new Empresa instance in MySQL database.
@@ -68,7 +69,7 @@ export function selectByEmail(email: String) {
 				const errorMsg =
 					'Select by email error: No Empresa was found with the passed email.'
 				console.log(errorMsg)
-				return reject(errorMsg)
+				return reject(new EmpresaNotFoundException())
 			}
 
 			// Data is returned with "RowDataPacket" name. This was the only way I've found to remove it
