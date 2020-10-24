@@ -3,11 +3,14 @@ import { Button, StyleSheet, Text, TextInput, View, Alert } from 'react-native'
 import { loginTrabalhador } from '../../../API/TrabalhadorAPI'
 import AppButton from '../../../components/AppButton'
 import AppTextInput from '../../../components/AppTextInput'
+import AppPicker from '../../../components/AppPicker'
 import { DispatchContext } from '../../../contexts'
+import { loginEmpresa } from '../../../API/EmpresaAPI'
 
 export default function LoginScreen({ navigation }) {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [accountType, setAccountType] = useState('')
 	const dispatch = useContext(DispatchContext)
 
 	function handleRegisterSubmit() {
@@ -15,18 +18,42 @@ export default function LoginScreen({ navigation }) {
 	}
 
 	function handleLoginSubmit() {
-		loginTrabalhador(email, password)
-			.then(({ message, token }) => {
-				dispatch({
-					type: 'logIn',
-					userType: 'TRABALHADOR',
-					userEmail: email,
-					authToken: token
-				})
-			})
-			.catch((err) => {
-				Alert.alert('Erro ao fazer login', err, [{ text: 'Ok' }])
-			})
+		if (!(email && password && accountType)) {
+			Alert.alert(
+				'Erro ao fazer login',
+				'Preencha todos os dados corretamente!',
+				[{ text: 'Ok' }]
+			)
+		} else {
+			if (accountType === 'TRABALHADOR') {
+				loginTrabalhador(email, password)
+					.then(({ message, token }) => {
+						dispatch({
+							type: 'logIn',
+							userType: 'TRABALHADOR',
+							userEmail: email,
+							authToken: token
+						})
+					})
+					.catch((err) => {
+						Alert.alert('Erro ao fazer login', err, [{ text: 'Ok' }])
+					})
+			}
+			if (accountType === 'EMPRESA') {
+				loginEmpresa(email, password)
+					.then(({ message, token }) => {
+						dispatch({
+							type: 'logIn',
+							userType: 'EMPRESA',
+							userEmail: email,
+							authToken: token
+						})
+					})
+					.catch((err) => {
+						Alert.alert('Erro ao fazer login', err, [{ text: 'Ok' }])
+					})
+			}
+		}
 	}
 
 	return (
@@ -46,6 +73,18 @@ export default function LoginScreen({ navigation }) {
 				value={password}
 				onChangeText={(text) => setPassword(text)}
 			/>
+			<Text>Tipo de Conta</Text>
+
+			<AppPicker
+				onValueChange={(itemValue) => setAccountType(itemValue)}
+				selectedValue={accountType}
+				items={[
+					{ label: 'Selecione aqui', value: '' },
+					{ label: 'Trabalhador', value: 'TRABALHADOR' },
+					{ label: 'Empresa', value: 'EMPRESA' }
+				]}
+				style={styles.picker}
+			></AppPicker>
 			<AppButton title="Confirmar" onPress={handleLoginSubmit} margin={10} />
 			<AppButton title="Registrar" onPress={handleRegisterSubmit} margin={10} />
 		</View>
@@ -61,9 +100,12 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 80,
 		color: '#009688',
-		marginBottom: 80
+		marginBottom: 50
 	},
 	input: {
 		marginBottom: 20
+	},
+	picker: {
+		marginBottom: 35
 	}
 })
