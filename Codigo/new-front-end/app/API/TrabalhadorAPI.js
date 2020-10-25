@@ -68,3 +68,26 @@ export async function loginTrabalhador(email, senha) {
 		}
 	}
 }
+
+/**
+ * Make a GET request to the API to get the trabalhador with the passed email.
+ *
+ * Returns a trabalhador object.
+ */
+export async function getTrabalhador(email, token) {
+	try {
+		const { data } = await axios({
+			method: 'get',
+			url: '/trabalhador/' + email,
+			headers: {
+				Authorization: token
+			}
+		})
+
+		return data.trabalhador
+	} catch (err) {
+		console.log(token)
+		console.log(err.response)
+		throw err
+	}
+}
