@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, View, Text, Alert } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { getTrabalhador } from '../../../../API/TrabalhadorAPI'
+import {
+	getTrabalhador,
+	deleteTrabalhador
+} from '../../../../API/TrabalhadorAPI'
 import { StateContext, DispatchContext } from '../../../../contexts'
 import AppButton from '../../../../components/AppButton'
 
@@ -40,6 +43,39 @@ export default function TrabalhadorProfile({}) {
 				)
 			})
 	}, [])
+
+	function handleExclusionClick() {
+		Alert.alert(
+			'Atenção!',
+			'Você realmente deseja excluir seu perfil?\n Não será possível voltar atrás depois!',
+			[
+				{ text: 'Cancelar' },
+				{
+					text: 'Excluir',
+					onPress: () => {
+						deleteTrabalhador(state.userEmail, state.authToken)
+							.then(() => {
+								Alert.alert('Perfil deletado', '', [
+									{
+										text: 'Ok',
+										onPress: () => {
+											dispatch({ type: 'logOut' })
+										}
+									}
+								])
+							})
+							.catch((err) => {
+								Alert.alert(
+									'Erro',
+									'Houve um erro de conexão ao deletar o seu perfil',
+									[{ text: 'Ok' }]
+								)
+							})
+					}
+				}
+			]
+		)
+	}
 
 	return (
 		<View style={styles.container}>
@@ -127,7 +163,12 @@ export default function TrabalhadorProfile({}) {
 							})
 						}}
 					/>
-					<AppButton title="Excluir" margin={5} backgroundColor="red" />
+					<AppButton
+						title="Excluir"
+						margin={5}
+						backgroundColor="red"
+						onPress={handleExclusionClick}
+					/>
 				</View>
 			</ScrollView>
 		</View>

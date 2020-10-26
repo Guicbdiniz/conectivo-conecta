@@ -7,6 +7,7 @@ import AppTextInput from '../../../components/AppTextInput'
 import AppNumericInput from '../../../components/AppNumericInput'
 import AppDateInput from '../../../components/AppDateInput'
 import AppPicker from '../../../components/AppPicker'
+import { DispatchContext } from '../../../contexts'
 
 export default function RegisterTrabalhadorForm() {
 	const [cpf, setCpf] = useState('')
@@ -25,6 +26,8 @@ export default function RegisterTrabalhadorForm() {
 	const [email, setEmail] = useState('')
 	const [senha, setSenha] = useState('')
 	const [secondPassword, setSecondPassword] = useState('')
+
+	const dispatch = useContext(DispatchContext)
 
 	function getSecondPasswordStyle() {
 		const doPasswordsMatch = senha === secondPassword
@@ -64,7 +67,7 @@ export default function RegisterTrabalhadorForm() {
 				cpf: cpf,
 				nomeCompleto: nomeCompleto,
 				nomeCompletoMae: nomeCompletoMae,
-				numeroDeRg: parseInt(numeroDeRg),
+				numeroDeRG: parseInt(numeroDeRg),
 				dataDeNascimento: dataDeNascimento,
 				localDeNascimento: localDeNascimento,
 				estadoCivil: estadoCivil,
@@ -84,7 +87,6 @@ export default function RegisterTrabalhadorForm() {
 
 			createTrabalhador(trabalhador, conta)
 				.then((data) => {
-					console.log(data)
 					const { message, trabalhador, conta, token } = data
 					Alert.alert('Sucesso', 'Trabalhador criado com sucesso.', [
 						{
