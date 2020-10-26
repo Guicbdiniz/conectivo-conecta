@@ -2,9 +2,19 @@ import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-export default function AppButton({ onPress, title, margin, fontSize }) {
+export default function AppButton({
+	onPress,
+	title,
+	margin,
+	fontSize,
+	backgroundColor
+}) {
 	function getContainerStyle() {
-		return [styles.appButtonContainer, margin && { margin }]
+		return [
+			styles.appButtonContainer,
+			margin && { margin },
+			backgroundColor && { backgroundColor }
+		]
 	}
 
 	function getTextStyle() {

@@ -21,7 +21,9 @@ export async function createTrabalhador(trabalhadorData, userData) {
 				conta: userData
 			}
 		})
+
 		console.log(data)
+		return data
 	} catch (error) {
 		const { response } = error
 		if (!response) {
@@ -78,6 +80,27 @@ export async function getTrabalhador(email, token) {
 	try {
 		const { data } = await axios({
 			method: 'get',
+			url: '/trabalhador/' + email,
+			headers: {
+				Authorization: token
+			}
+		})
+
+		return data.trabalhador
+	} catch (err) {
+		console.log(token)
+		console.log(err.response)
+		throw err
+	}
+}
+
+/**
+ * Make a DELETE request to the API to get the trabalhador with the passed email.
+ */
+export async function deleteTrabalhador(email, token) {
+	try {
+		const { data } = await axios({
+			method: 'delete',
 			url: '/trabalhador/' + email,
 			headers: {
 				Authorization: token
