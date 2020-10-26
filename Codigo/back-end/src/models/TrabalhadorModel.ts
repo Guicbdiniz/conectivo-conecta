@@ -33,7 +33,7 @@ export function removeTrabalhador(email: String): Promise<String> {
 	return new Promise(function (resolve, reject) {
 		const trabalhadorQueryString =
 			'DELETE FROM `trabalhador` WHERE `email` = ?;'
-		const contaQueryString = 'DELETE FROM `conta` "WHERE `email` = ?;'
+		const contaQueryString = 'DELETE FROM `conta` WHERE `email` = ?;'
 
 		sql.query(trabalhadorQueryString, [email], function (err, res) {
 			if (err) {

@@ -52,6 +52,8 @@ export function isTrabalhador(object: any): object is Trabalhador {
 					TrabalhadorProperties[propertyName]
 			)
 		) {
+			console.log('Que que deu: ', propertyName)
+			console.log(object[propertyName])
 			return false
 		}
 	}
