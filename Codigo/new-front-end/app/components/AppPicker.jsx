@@ -5,7 +5,8 @@ export default function AppPicker({
 	items,
 	style,
 	selectedValue,
-	onValueChange
+	onValueChange,
+	onEndEditing
 }) {
 	function getPickerStyles() {
 		return [styles.container, style]
@@ -17,6 +18,7 @@ export default function AppPicker({
 				style={styles.picker}
 				selectedValue={selectedValue}
 				onValueChange={onValueChange}
+				onResponderEnd={onEndEditing ? onEndEditing : null}
 			>
 				{items.map((item, index) => (
 					<Picker.Item label={item.label} value={item.value} key={index} />
