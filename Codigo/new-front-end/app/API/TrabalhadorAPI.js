@@ -114,3 +114,27 @@ export async function deleteTrabalhador(email, token) {
 		throw err
 	}
 }
+
+/**
+ * Make a PUT request to the API to edit the trabalhador with the passed email.
+ */
+export async function editTrabalhador(changes, email, token) {
+	try {
+		const { data } = await axios({
+			method: 'put',
+			url: '/trabalhador/' + email,
+			headers: {
+				Authorization: token
+			},
+			data: {
+				changes: changes
+			}
+		})
+
+		return data.trabalhador
+	} catch (err) {
+		console.log(token)
+		console.log(err.response)
+		throw err
+	}
+}

@@ -2,7 +2,13 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 
-export default function AppDateInput({ value, setValue, style, maxLength }) {
+export default function AppDateInput({
+	value,
+	setValue,
+	style,
+	maxLength,
+	onEndEditing
+}) {
 	function getDateInputStyles() {
 		return [styles.textInput, style]
 	}
@@ -34,6 +40,7 @@ export default function AppDateInput({ value, setValue, style, maxLength }) {
 			style={getDateInputStyles()}
 			maxLength={maxLength ? maxLength : 50}
 			keyboardType="numeric"
+			onEndEditing={onEndEditing ? onEndEditing : null}
 		/>
 	)
 }

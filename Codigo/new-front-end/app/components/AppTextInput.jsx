@@ -11,7 +11,8 @@ export default function AppTextInput({
 	maxLength,
 	keyboardType,
 	multiline,
-	numberOfLines
+	numberOfLines,
+	onEndEditing
 }) {
 	function getTextInputStyles() {
 		return [styles.textInput, style]
@@ -28,6 +29,7 @@ export default function AppTextInput({
 			keyboardType={keyboardType ? keyboardType : 'default'}
 			multiline={multiline ? multiline : false}
 			numberOfLines={multiline && numberOfLines ? numberOfLines : null}
+			onEndEditing={onEndEditing ? onEndEditing : null}
 		/>
 	)
 }
