@@ -9,8 +9,7 @@ const pool = mysql.createPool({
 	host: HOST,
 	user: USER,
 	password: PASSWORD,
-	database: DATABASE_NAME,
-	insecureAuth: true
+	database: DATABASE_NAME
 })
 
 export default pool
