@@ -14,7 +14,7 @@ export default function EmpresaProfile({}) {
 		site: '',
 		telefoneDeContato: '',
 		caminhoParaImagem: '',
-		eValido: false
+		eValido: true
 	})
 	const dispatch = useContext(DispatchContext)
 	const state = useContext(StateContext)
@@ -35,7 +35,7 @@ export default function EmpresaProfile({}) {
 	}, [])
 
 	return empresa.eValido ? (
-		<ValidatedProfile empresa={empresa} setEmpresa={empresa} />
+		<ValidatedProfile empresa={empresa} setEmpresa={setEmpresa} />
 	) : (
 		<NotValidatedProfile empresa={empresa} />
 	)
