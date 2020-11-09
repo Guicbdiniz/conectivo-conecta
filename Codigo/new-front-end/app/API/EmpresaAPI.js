@@ -113,3 +113,27 @@ export async function deleteEmpresa(email, token) {
 		throw err
 	}
 }
+
+/**
+ * Make a PUT request to the API to edit the empresa with the passed email.
+ */
+export async function editEmpresa(changes, email, token) {
+	try {
+		const { data } = await axios({
+			method: 'put',
+			url: '/empresa/' + email,
+			headers: {
+				Authorization: token
+			},
+			data: {
+				changes: changes
+			}
+		})
+
+		return data.empresa
+	} catch (err) {
+		console.log(token)
+		console.log(err.response)
+		throw err
+	}
+}
