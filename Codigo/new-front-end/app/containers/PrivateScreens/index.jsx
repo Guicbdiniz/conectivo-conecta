@@ -5,8 +5,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import TrabalhadorProfile from './Trabalhador/TrabalhadorProfile'
 import TrabalhadorFeed from './Trabalhador/TrabalhadorFeed'
 import { AntDesign, FontAwesome } from '@expo/vector-icons'
+import EmpresaProfile from './Empresa/EmpresaProfile'
 
-const ICONS_SIZE = 60
+const ICONS_SIZE = 50
 const ICONS_COLOR_NOT_ACTIVE = 'black'
 const ICONS_COLOR_ACTIVE = '#009688'
 
@@ -15,10 +16,10 @@ export default function PrivateContainer() {
 	const { userType } = state
 
 	const tabBarOptions = {
-		style: { height: 100 },
+		style: { height: 80 },
 		activeTintColor: ICONS_COLOR_ACTIVE,
 		inactiveTintColor: ICONS_COLOR_NOT_ACTIVE,
-		labelStyle: { fontSize: 20, fontWeight: 'bold' }
+		labelStyle: { fontSize: 18, fontWeight: 'bold' }
 	}
 
 	function getAntDesignIcon(name) {
@@ -66,14 +67,28 @@ export default function PrivateContainer() {
 				const EmpresaTab = createBottomTabNavigator()
 				return (
 					<EmpresaTab.Navigator
-						initialRouteName="Profile"
+						initialRouteName="Perfil"
 						tabBarOptions={tabBarOptions}
 					>
 						<EmpresaTab.Screen
-							name="Profile"
-							component={TrabalhadorProfile}
+							name="Perfil"
+							component={EmpresaProfile}
 							options={{
 								tabBarIcon: getAntDesignIcon('profile')
+							}}
+						/>
+						<EmpresaTab.Screen
+							name="Nova Vaga"
+							component={EmpresaProfile}
+							options={{
+								tabBarIcon: getAntDesignIcon('pluscircleo')
+							}}
+						/>
+						<EmpresaTab.Screen
+							name="Minhas Vagas"
+							component={EmpresaProfile}
+							options={{
+								tabBarIcon: getFontAwesomeIcon('feed')
 							}}
 						/>
 					</EmpresaTab.Navigator>
