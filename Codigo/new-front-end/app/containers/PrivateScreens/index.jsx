@@ -6,8 +6,9 @@ import TrabalhadorProfile from './Trabalhador/TrabalhadorProfile'
 import TrabalhadorFeed from './Trabalhador/TrabalhadorFeed'
 import { AntDesign, FontAwesome } from '@expo/vector-icons'
 import EmpresaProfile from './Empresa/EmpresaProfile'
+import EmpresaNewJob from './Empresa/EmpresaNewJob'
 
-const ICONS_SIZE = 50
+const ICONS_SIZE = 40
 const ICONS_COLOR_NOT_ACTIVE = 'black'
 const ICONS_COLOR_ACTIVE = '#009688'
 
@@ -79,7 +80,7 @@ export default function PrivateContainer() {
 						/>
 						<EmpresaTab.Screen
 							name="Nova Vaga"
-							component={EmpresaProfile}
+							component={EmpresaNewJob}
 							options={{
 								tabBarIcon: getAntDesignIcon('pluscircleo')
 							}}

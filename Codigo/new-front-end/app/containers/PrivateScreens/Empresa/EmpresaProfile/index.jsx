@@ -20,7 +20,6 @@ export default function EmpresaProfile({}) {
 	const state = useContext(StateContext)
 
 	useEffect(() => {
-		console.log('Ta aqui!')
 		getEmpresa(state.userEmail, state.authToken)
 			.then((empresa) => {
 				setEmpresa(empresa), console.log('Empresa getted:', empresa)
