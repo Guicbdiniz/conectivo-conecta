@@ -49,8 +49,8 @@ export default function NotValidatedProfile({ empresa }) {
 
 	function handleInvalidatedPress() {
 		Alert.alert(
-			'Perfil Inválidado!',
-			'Espere até o administrador validar este perfil para poder criar novas vagas e editar seu perfil!',
+			'Perfil Inválidado',
+			'Espere até o administrador validar este perfil para poder criar novas vagas e editar seu perfil',
 			[{ text: 'Ok' }]
 		)
 	}
