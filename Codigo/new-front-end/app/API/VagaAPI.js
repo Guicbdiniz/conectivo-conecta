@@ -24,7 +24,6 @@ export async function createVaga(vagaData, authToken) {
 			}
 		})
 
-		console.log(data)
 		return data
 	} catch (error) {
 		const { response } = error

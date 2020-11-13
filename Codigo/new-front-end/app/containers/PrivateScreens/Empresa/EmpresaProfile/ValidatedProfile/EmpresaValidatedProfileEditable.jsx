@@ -8,24 +8,22 @@ import {
 	TouchableOpacity
 } from 'react-native'
 import { editEmpresa, getEmpresa } from '../../../../../API/EmpresaAPI'
-import { StateContext } from '../../../../../contexts'
+import { DispatchContext, StateContext } from '../../../../../contexts'
 import AppButton from '../../../../../components/AppButton'
 import AppTextInput from '../../../../../components/AppTextInput'
 import AppNumericInput from '../../../../../components/AppNumericInput'
 
-export default function EmpresaValidatedProfileEditable({
-	empresa,
-	setEmpresa,
-	setBeingEdited
-}) {
+export default function EmpresaValidatedProfileEditable({ setBeingEdited }) {
+	const [changes, setChanges] = useState({})
+	const dispatch = useContext(DispatchContext)
+	const state = useContext(StateContext)
+	const { userData: empresa } = state
+
 	const [razaoSocial, setRazaoSocial] = useState(empresa.razaoSocial)
 	const [site, setSite] = useState(empresa.site)
 	const [telefoneDeContato, setTelefoneDeContato] = useState(
 		empresa.telefoneDeContato
 	)
-
-	const [changes, setChanges] = useState({})
-	const state = useContext(StateContext)
 
 	function handlePropertyOnEndEditing(propertyName, value) {
 		return () => {
@@ -53,23 +51,17 @@ export default function EmpresaValidatedProfileEditable({
 
 	function submitChanges() {
 		editEmpresa(changes, state.userEmail, state.authToken)
-			.then((data) => {
-				getEmpresa(state.userEmail, state.authToken)
-					.then((empresa) => {
-						setEmpresa(empresa)
-						setBeingEdited(false)
-					})
-					.catch((err) => {
-						console.log(err)
-						setBeingEdited(false)
-					})
+			.then((empresa) => {
+				dispatch({
+					type: 'editUserData',
+					userData: empresa
+				})
+				setBeingEdited(false)
 			})
 			.catch((err) => {
-				Alert.alert(
-					'Erro',
-					'Houve um erro de conexão ao deletar o seu perfil',
-					[{ text: 'Ok' }]
-				)
+				Alert.alert('Erro', 'Houve um erro de conexão ao editar o seu perfil', [
+					{ text: 'Ok' }
+				])
 			})
 	}
 

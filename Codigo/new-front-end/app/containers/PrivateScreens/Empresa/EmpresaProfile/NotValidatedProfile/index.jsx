@@ -8,11 +8,13 @@ import {
 	TouchableOpacity
 } from 'react-native'
 import { deleteEmpresa } from '../../../../../API/EmpresaAPI'
-import { DispatchContext } from '../../../../../contexts'
+import { DispatchContext, StateContext } from '../../../../../contexts'
 import AppButton from '../../../../../components/AppButton'
 
-export default function NotValidatedProfile({ empresa }) {
+export default function NotValidatedProfile({}) {
 	const dispatch = useContext(DispatchContext)
+	const state = useContext(StateContext)
+	const { userData: empresa } = state
 
 	function handleExclusionClick() {
 		Alert.alert(

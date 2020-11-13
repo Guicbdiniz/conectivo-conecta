@@ -7,45 +7,11 @@ import {
 import AppButton from '../../../../components/AppButton'
 import { DispatchContext, StateContext } from '../../../../contexts'
 
-export default function TrabalhadorProfileNotEdiatable({
-	setBeingEdited,
-	setSharedTrabalhador
-}) {
+export default function TrabalhadorProfileNotEdiatable({ setBeingEdited }) {
 	const dispatch = useContext(DispatchContext)
 	const state = useContext(StateContext)
 
-	const [trabalhador, setTrabalhador] = useState({
-		cpf: '',
-		nomeCompleto: '',
-		nomeCompletoMae: '',
-		numeroDeRG: '',
-		dataDeNascimento: '',
-		localDeNascimento: '',
-		estadoCivil: '',
-		numeroDeFilhos: '',
-		telefoneDeContato: '',
-		endereco: '',
-		escolaridade: '',
-		objetivoProfissional: '',
-		resumoProfissional: '',
-		email: '',
-		caminhoParaImagem: '',
-		caminhoParaCurriculo: ''
-	})
-
-	useEffect(() => {
-		getTrabalhador(state.userEmail, state.authToken)
-			.then((trabalhador) => {
-				setTrabalhador(trabalhador), console.log(trabalhador)
-			})
-			.catch((err) => {
-				Alert.alert(
-					'Erro',
-					'Houve um erro de conexão ao buscar os dados do seu perfil',
-					[{ text: 'Ok' }]
-				)
-			})
-	}, [])
+	const { userData: trabalhador } = state
 
 	function handleExclusionClick() {
 		Alert.alert(
@@ -81,7 +47,6 @@ export default function TrabalhadorProfileNotEdiatable({
 	}
 
 	function handleEditButton() {
-		setSharedTrabalhador(trabalhador)
 		setBeingEdited(true)
 	}
 
@@ -128,11 +93,15 @@ export default function TrabalhadorProfileNotEdiatable({
 			</View>
 			<View style={styles.profileProperty}>
 				<Text style={styles.profilePropertyName}>Nome Completo Mãe: </Text>
-				<Text>{trabalhador.nomeCompletoMae}</Text>
+				<Text style={styles.profilePropertyText}>
+					{trabalhador.nomeCompletoMae}
+				</Text>
 			</View>
 			<View style={styles.profileProperty}>
 				<Text style={styles.profilePropertyName}>Número de Filhos: </Text>
-				<Text>{trabalhador.numeroDeFilhos}</Text>
+				<Text style={styles.profilePropertyText}>
+					{trabalhador.numeroDeFilhos}
+				</Text>
 			</View>
 			<View style={styles.profileProperty}>
 				<Text style={styles.profilePropertyName}>Telefone de Contato: </Text>

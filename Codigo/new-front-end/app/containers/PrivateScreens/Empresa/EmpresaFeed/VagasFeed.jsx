@@ -13,57 +13,12 @@ import { StateContext } from '../../../../contexts'
 import VagaMinimized from './VagaMinimized'
 
 export default function VagasFeed({ navigation }) {
-	const { userEmail, authToken } = useContext(StateContext)
-	const [areThereVagas, setAreThereVagas] = useState(false)
-	const [empresa, setEmpresa] = useState({
-		cnpj: '',
-		email: '',
-		razaoSocial: '',
-		site: '',
-		telefoneDeContato: '',
-		caminhoParaImagem: '',
-		eValido: true
-	})
-	const [vagas, setVagas] = useState([
-		{
-			categoria: '',
-			cnpjDaEmpresa: '',
-			descricao: '',
-			id: 0,
-			localizacao: '',
-			salario: 0.0,
-			titulo: ''
-		}
-	])
-
-	useEffect(() => {
-		getEmpresa(userEmail, authToken)
-			.then((empresa) => {
-				setEmpresa(empresa)
-				if (empresa.eValido) {
-					const { cnpj } = empresa
-					getVagasFromCnpj(cnpj, authToken)
-						.then((vagas) => {
-							setVagas(vagas)
-							setAreThereVagas(vagas.length > 0)
-						})
-						.catch((err) => {
-							Alert.alert(
-								'Erro',
-								'Houve um erro ao tentar pegar os dados das vagas da empresa logada',
-								[{ text: 'Ok' }]
-							)
-						})
-				}
-			})
-			.catch((err) => {
-				Alert.alert(
-					'Erro',
-					'Houve um erro ao tentar pegar os dados da empresa logada',
-					[{ text: 'Ok' }]
-				)
-			})
-	}, [navigation])
+	const {
+		userEmail,
+		authToken,
+		userData: empresa,
+		vagasData: vagas
+	} = useContext(StateContext)
 
 	function handleInvalidatedPress() {
 		Alert.alert(
@@ -84,7 +39,7 @@ export default function VagasFeed({ navigation }) {
 				</TouchableOpacity>
 			)
 		}
-		if (areThereVagas) {
+		if (vagas.length > 1) {
 			return vagas.map((vaga, index, array) => (
 				<VagaMinimized vaga={vaga} key={vaga.id} navigation={navigation} />
 			))
