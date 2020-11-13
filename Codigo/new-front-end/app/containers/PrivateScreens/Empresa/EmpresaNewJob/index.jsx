@@ -71,7 +71,7 @@ export default function EmpresaNewJob({}) {
 				style={styles.invalidatedContainer}
 				onPress={handleInvalidatedPress}
 			>
-				<Text style={styles.invalidatedMessage}>Perfil Inválidado</Text>
+				<Text style={styles.invalidatedMessage}>Perfil Invalidado</Text>
 			</TouchableOpacity>
 		</View>
 	)

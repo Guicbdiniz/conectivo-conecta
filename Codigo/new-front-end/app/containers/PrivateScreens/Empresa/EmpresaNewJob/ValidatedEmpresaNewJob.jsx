@@ -57,7 +57,7 @@ export default function ValidatedEmpresaNewJob({ empresa }) {
 			<Text style={styles.title}>Registro de Vaga</Text>
 			<ScrollView
 				contentContainerStyle={{ alignItems: 'center' }}
-				style={{ marginBottom: 50 }}
+				style={{ marginBottom: 20 }}
 			>
 				<Text style={styles.textLabel}>CNPJ</Text>
 				<AppNumericInput

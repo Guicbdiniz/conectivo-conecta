@@ -110,15 +110,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'center'
 	},
-	title: {
-		textAlign: 'center',
-		fontSize: 50,
-		marginTop: 60,
-		marginBottom: 20,
-		color: '#009688'
-	},
 	scrollContainer: {
-		marginBottom: 25,
+		marginBottom: 15,
 		width: '80%'
 	},
 	profileProperty: {
@@ -133,7 +126,8 @@ const styles = StyleSheet.create({
 	},
 	buttonsContainer: {
 		alignItems: 'center',
-		width: '100%'
+		width: '100%',
+		marginTop: 10
 	},
 	invalidatedMessage: {
 		fontSize: 22,

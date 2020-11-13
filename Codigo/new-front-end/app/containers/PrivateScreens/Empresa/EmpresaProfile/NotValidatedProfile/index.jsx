@@ -62,7 +62,7 @@ export default function NotValidatedProfile({ empresa }) {
 				style={styles.invalidatedContainer}
 				onPress={handleInvalidatedPress}
 			>
-				<Text style={styles.invalidatedMessage}>Perfil Inválidado</Text>
+				<Text style={styles.invalidatedMessage}>Perfil Invalidado</Text>
 			</TouchableOpacity>
 			<ScrollView
 				contentContainerStyle={{ alignItems: 'flex-start' }}
@@ -123,11 +123,11 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontSize: 50,
 		marginTop: 60,
-		marginBottom: 20,
+		marginBottom: 30,
 		color: '#009688'
 	},
 	scrollContainer: {
-		marginBottom: 25,
+		marginBottom: 10,
 		width: '80%'
 	},
 	profileProperty: {
@@ -142,13 +142,14 @@ const styles = StyleSheet.create({
 	},
 	buttonsContainer: {
 		alignItems: 'center',
-		width: '100%'
+		width: '100%',
+		marginTop: 20
 	},
 	invalidatedMessage: {
 		fontSize: 22,
 		color: 'red'
 	},
 	invalidatedContainer: {
-		marginBottom: 10
+		marginBottom: 30
 	}
 })
