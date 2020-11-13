@@ -1,25 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Text, Alert } from 'react-native'
 import EmpresaValidatedProfileNotEditable from './EmpresaValidatedProfileNotEditable'
 import EmpresaValidatedProfileEditable from './EmpresaValidatedProfileEditable'
 
-export default function EmpresaValidatedProfile({ empresa, setEmpresa }) {
+export default function EmpresaValidatedProfile({}) {
 	const [beingEdited, setBeingEdited] = useState(false)
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>Seu Perfil</Text>
 			{beingEdited ? (
-				<EmpresaValidatedProfileEditable
-					empresa={empresa}
-					setEmpresa={setEmpresa}
-					setBeingEdited={setBeingEdited}
-				/>
+				<EmpresaValidatedProfileEditable setBeingEdited={setBeingEdited} />
 			) : (
-				<EmpresaValidatedProfileNotEditable
-					setBeingEdited={setBeingEdited}
-					empresa={empresa}
-				/>
+				<EmpresaValidatedProfileNotEditable setBeingEdited={setBeingEdited} />
 			)}
 		</View>
 	)

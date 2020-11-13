@@ -96,7 +96,8 @@ export default function RegisterTrabalhadorForm() {
 									type: 'logIn',
 									userType: 'TRABALHADOR',
 									userEmail: email,
-									authToken: token
+									authToken: token,
+									userData: trabalhador
 								})
 							}
 						}

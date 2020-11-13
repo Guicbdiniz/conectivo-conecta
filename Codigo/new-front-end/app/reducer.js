@@ -5,7 +5,9 @@ export const initialState = {
 	userIsLoggedIn: false,
 	userType: 'NONE',
 	userEmail: '',
-	authToken: ''
+	authToken: '',
+	userData: {},
+	vagasData: []
 }
 
 /**
@@ -23,14 +25,16 @@ export const UserLoggedTypes = {
 export function reducer(state, action) {
 	switch (action.type) {
 		case 'logIn':
-			const { userType, userEmail, authToken } = action
+			let { userType, userEmail, authToken, userData, vagasData } = action
 
 			return {
 				...state,
 				userIsLoggedIn: true,
 				userType: userType,
 				userEmail: userEmail,
-				authToken: authToken
+				authToken: authToken,
+				userData: userData,
+				vagasData: vagasData
 			}
 
 		case 'logOut':
@@ -39,7 +43,32 @@ export function reducer(state, action) {
 				userIsLoggedIn: false,
 				userType: UserLoggedTypes.NONE,
 				userEmail: '',
-				authToken: ''
+				authToken: '',
+				userData: {}
+			}
+
+		case 'editUserData':
+			userData = action.userData
+
+			return {
+				...state,
+				userData: userData
+			}
+
+		case 'addVaga':
+			const vaga = action.vaga
+
+			return {
+				...state,
+				vagasData: [...state.vagasData, vaga]
+			}
+
+		case 'editVagas':
+			vagasData = action.vagasData
+
+			return {
+				...state,
+				vagasData: vagasData
 			}
 	}
 }

@@ -5,10 +5,12 @@ import AppButton from '../../../../components/AppButton'
 import AppNumericInput from '../../../../components/AppNumericInput'
 import AppTextInput from '../../../../components/AppTextInput'
 import { DispatchContext, StateContext } from '../../../../contexts'
-import { createVaga } from '../../../../API/VagaAPI'
+import { createVaga, getVagasFromCnpj } from '../../../../API/VagaAPI'
 
-export default function ValidatedEmpresaNewJob({ empresa }) {
+export default function ValidatedEmpresaNewJob({}) {
+	const dispatch = useContext(DispatchContext)
 	const state = useContext(StateContext)
+	const { authToken, userData: empresa } = state
 
 	const [titulo, setTitulo] = useState('')
 	const [salario, setSalario] = useState('')
@@ -31,20 +33,30 @@ export default function ValidatedEmpresaNewJob({ empresa }) {
 				localizacao: localizacao
 			}
 
-			createVaga(vaga, state.authToken)
+			createVaga(vaga, authToken)
 				.then((data) => {
-					Alert.alert('Sucesso', 'Vaga criada com sucesso.', [
-						{
-							text: 'ok',
-							onPress: () => {
-								setCategoria('')
-								setDescricao('')
-								setLocalizacao('')
-								setSalario('')
-								setTitulo('')
-							}
-						}
-					])
+					getVagasFromCnpj(empresa.cnpj, authToken)
+						.then((vagas) => {
+							dispatch({
+								type: 'editVagas',
+								vagasData: vagas
+							})
+							Alert.alert('Sucesso', 'Vaga criada com sucesso.', [
+								{
+									text: 'ok',
+									onPress: () => {
+										setCategoria('')
+										setDescricao('')
+										setLocalizacao('')
+										setSalario('')
+										setTitulo('')
+									}
+								}
+							])
+						})
+						.catch((err) => {
+							throw err
+						})
 				})
 				.catch((err) => {
 					Alert.alert('Erro', err, [{ text: 'Ok' }])

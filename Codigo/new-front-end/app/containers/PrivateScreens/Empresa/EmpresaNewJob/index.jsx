@@ -18,41 +18,7 @@ import ValidatedEmpresaNewJob from './ValidatedEmpresaNewJob'
 export default function EmpresaNewJob({}) {
 	const dispatch = useContext(DispatchContext)
 	const state = useContext(StateContext)
-
-	const [empresa, setEmpresa] = useState({
-		cnpj: '',
-		email: '',
-		razaoSocial: '',
-		site: '',
-		telefoneDeContato: '',
-		caminhoParaImagem: '',
-		eValido: true
-	})
-
-	useEffect(() => {
-		const { userEmail, authToken } = state
-
-		getEmpresa(userEmail, authToken)
-			.then((empresa) => {
-				setEmpresa(empresa)
-			})
-			.catch((err) => {
-				Alert.alert(
-					'Erro',
-					'Houve um erro ao tentar pegar os dados da empresa logada',
-					[
-						{
-							text: 'Ok',
-							onPress: () => {
-								dispatch({
-									type: 'logOut'
-								})
-							}
-						}
-					]
-				)
-			})
-	}, [])
+	const { userData: empresa } = state
 
 	function handleInvalidatedPress() {
 		Alert.alert(
@@ -63,7 +29,7 @@ export default function EmpresaNewJob({}) {
 	}
 
 	return empresa.eValido ? (
-		<ValidatedEmpresaNewJob empresa={empresa} />
+		<ValidatedEmpresaNewJob />
 	) : (
 		<View style={styles.container}>
 			<Text style={styles.title}>Registro de Vaga</Text>

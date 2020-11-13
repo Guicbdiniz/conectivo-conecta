@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import { View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import VagasFeed from './VagasFeed'
@@ -8,17 +8,6 @@ import { StateContext } from '../../../../contexts'
 const Stack = createStackNavigator()
 
 export default function EmpresaFeed({ navigation }) {
-	const { userEmail, authToken } = useContext(StateContext)
-	const [empresa, setEmpresa] = useState({
-		cnpj: '',
-		email: '',
-		razaoSocial: '',
-		site: '',
-		telefoneDeContato: '',
-		caminhoParaImagem: '',
-		eValido: true
-	})
-
 	return (
 		<Stack.Navigator initialRouteName="Feed">
 			<Stack.Screen

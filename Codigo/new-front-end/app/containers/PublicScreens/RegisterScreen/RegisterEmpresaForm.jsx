@@ -58,7 +58,6 @@ export default function RegisterEmpresaForm() {
 
 			createEmpresa(empresa, conta)
 				.then((data) => {
-					console.log(data)
 					const { message, empresa, conta, token } = data
 					Alert.alert('Sucesso', 'Empresa criada com sucesso.', [
 						{
@@ -68,7 +67,8 @@ export default function RegisterEmpresaForm() {
 									type: 'logIn',
 									userType: 'EMPRESA',
 									userEmail: email,
-									authToken: token
+									authToken: token,
+									userData: empresa
 								})
 							}
 						}
