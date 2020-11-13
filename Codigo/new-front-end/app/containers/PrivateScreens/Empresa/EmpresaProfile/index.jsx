@@ -39,18 +39,3 @@ export default function EmpresaProfile({}) {
 		<NotValidatedProfile empresa={empresa} />
 	)
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'flex-start',
-		alignItems: 'center'
-	},
-	title: {
-		textAlign: 'center',
-		fontSize: 50,
-		marginTop: 60,
-		marginBottom: 30,
-		color: '#009688'
-	}
-})

@@ -7,8 +7,9 @@ import TrabalhadorFeed from './Trabalhador/TrabalhadorFeed'
 import { AntDesign, FontAwesome } from '@expo/vector-icons'
 import EmpresaProfile from './Empresa/EmpresaProfile'
 import EmpresaNewJob from './Empresa/EmpresaNewJob'
+import EmpresaFeed from './Empresa/EmpresaFeed'
 
-const ICONS_SIZE = 40
+const ICONS_SIZE = 30
 const ICONS_COLOR_NOT_ACTIVE = 'black'
 const ICONS_COLOR_ACTIVE = '#009688'
 
@@ -17,25 +18,21 @@ export default function PrivateContainer() {
 	const { userType } = state
 
 	const tabBarOptions = {
-		style: { height: 80 },
+		style: { height: 60 },
 		activeTintColor: ICONS_COLOR_ACTIVE,
 		inactiveTintColor: ICONS_COLOR_NOT_ACTIVE,
-		labelStyle: { fontSize: 18, fontWeight: 'bold' }
+		labelStyle: { fontSize: 14, fontWeight: 'bold' }
 	}
 
 	function getAntDesignIcon(name) {
-		return (focused, color, size) => (
-			<AntDesign name={name} size={ICONS_SIZE} color={ICONS_COLOR_NOT_ACTIVE} />
+		return ({ focused, color, size }) => (
+			<AntDesign name={name} size={ICONS_SIZE} color={color} />
 		)
 	}
 
 	function getFontAwesomeIcon(name) {
-		return (focused, color, size) => (
-			<FontAwesome
-				name={name}
-				size={ICONS_SIZE}
-				color={ICONS_COLOR_NOT_ACTIVE}
-			/>
+		return ({ focused, color }) => (
+			<FontAwesome name={name} size={ICONS_SIZE} color={color} />
 		)
 	}
 
@@ -70,6 +67,7 @@ export default function PrivateContainer() {
 					<EmpresaTab.Navigator
 						initialRouteName="Perfil"
 						tabBarOptions={tabBarOptions}
+						lazy={false}
 					>
 						<EmpresaTab.Screen
 							name="Perfil"
@@ -87,7 +85,7 @@ export default function PrivateContainer() {
 						/>
 						<EmpresaTab.Screen
 							name="Minhas Vagas"
-							component={EmpresaProfile}
+							component={EmpresaFeed}
 							options={{
 								tabBarIcon: getFontAwesomeIcon('feed')
 							}}
@@ -102,6 +100,6 @@ export default function PrivateContainer() {
 
 const styles = StyleSheet.create({
 	tabContainer: {
-		height: 100
+		height: 80
 	}
 })
