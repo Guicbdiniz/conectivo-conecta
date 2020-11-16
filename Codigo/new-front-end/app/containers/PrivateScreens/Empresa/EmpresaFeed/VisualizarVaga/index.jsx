@@ -1,12 +1,17 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { getAllTrabalhadoresFromVaga } from '../../../../../API/VagaAPI'
-import { StateContext } from '../../../../../contexts'
+import {
+	deleteVaga,
+	getAllTrabalhadoresFromVaga
+} from '../../../../../API/VagaAPI'
+import AppButton from '../../../../../components/AppButton'
+import { StateContext, DispatchContext } from '../../../../../contexts'
 import TrabalhadorRelatedToVaga from './TrabalhadorRelatedToVaga'
 
 export default function VisualizarVaga({ route, navigation }) {
 	const { vaga } = route.params
 	const { authToken } = useContext(StateContext)
+	const dispatch = useContext(DispatchContext)
 	const [trabalhadores, setTrabalhadores] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -53,6 +58,40 @@ export default function VisualizarVaga({ route, navigation }) {
 		))
 	}
 
+	function handleExclusionClick() {
+		Alert.alert(
+			'Atenção',
+			'Você realmente deseja excluir essa vaga?\nNão será possível voltar atrás depois.',
+			[{ text: 'Ok', onPress: handleVagaDeletion }, { text: 'Cancelar' }]
+		)
+	}
+
+	function handleEditClick() {
+		navigation.navigate('Editar Vaga', { vaga: vaga })
+	}
+
+	function handleVagaDeletion() {
+		deleteVaga(vaga.id, authToken)
+			.then(() => {
+				Alert.alert('Vaga deletada', '', [
+					{
+						text: 'Ok',
+						onPress: () => {
+							dispatch({ type: 'removeVaga', vaga: vaga })
+							navigation.navigate('Feed')
+						}
+					}
+				])
+			})
+			.catch((err) =>
+				Alert.alert(
+					'Erro',
+					'Houve um erro de conexão ao deletar o seu perfil',
+					[{ text: 'Ok' }]
+				)
+			)
+	}
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>{vaga.titulo}</Text>
@@ -81,6 +120,18 @@ export default function VisualizarVaga({ route, navigation }) {
 						<Text style={styles.vagaDescricaoName}>Descrição: </Text>
 						<Text style={styles.vagaPropertyText}>{vaga.descricao}</Text>
 					</View>
+				</View>
+				<View style={styles.buttonsView}>
+					<AppButton
+						title="Editar"
+						onPress={handleEditClick}
+						style={{ marginRight: 10 }}
+					/>
+					<AppButton
+						title="Excluir"
+						onPress={handleExclusionClick}
+						backgroundColor="red"
+					/>
 				</View>
 				<View style={styles.trabalhadoresView}>{getTrabalhadoresView()}</View>
 			</ScrollView>
@@ -139,5 +190,11 @@ const styles = StyleSheet.create({
 	loadingMessage: {
 		textAlign: 'center',
 		fontSize: 17
+	},
+	buttonsView: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		marginTop: 10,
+		marginBottom: 10
 	}
 })

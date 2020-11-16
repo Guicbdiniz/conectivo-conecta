@@ -70,5 +70,24 @@ export function reducer(state, action) {
 				...state,
 				vagasData: vagasData
 			}
+
+		case 'removeVaga':
+			const removedVaga = action.vaga
+			let vagas = state.vagasData.filter((vaga) => vaga.id != removedVaga.id)
+
+			return {
+				...state,
+				vagasData: vagas
+			}
+		case 'editVaga':
+			const vagaEdited = action.vaga
+			vagas = state.vagasData.map((vaga) =>
+				vaga.id === vagaEdited.id ? vagaEdited : vaga
+			)
+
+			return {
+				...state,
+				vagasData: vagas
+			}
 	}
 }
