@@ -69,7 +69,7 @@ export default function ValidatedEmpresaNewJob({}) {
 			<Text style={styles.title}>Registro de Vaga</Text>
 			<ScrollView
 				contentContainerStyle={{ alignItems: 'center' }}
-				style={{ marginBottom: 20 }}
+				style={{ marginBottom: 20, width: '80%' }}
 			>
 				<Text style={styles.textLabel}>CNPJ</Text>
 				<AppNumericInput
@@ -146,7 +146,8 @@ const styles = StyleSheet.create({
 	textInput: {
 		marginBottom: 20,
 		height: 50,
-		fontSize: 20
+		fontSize: 20,
+		width: '100%'
 	},
 	textLabel: {
 		fontSize: 20
@@ -161,6 +162,7 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 		height: 150,
 		fontSize: 20,
-		textAlignVertical: 'top'
+		textAlignVertical: 'top',
+		width: '100%'
 	}
 })

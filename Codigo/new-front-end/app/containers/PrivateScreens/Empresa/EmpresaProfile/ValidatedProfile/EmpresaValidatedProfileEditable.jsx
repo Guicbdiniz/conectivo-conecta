@@ -117,15 +117,17 @@ export default function EmpresaValidatedProfileEditable({ setBeingEdited }) {
 const styles = StyleSheet.create({
 	scrollContainer: {
 		marginBottom: 25,
-		marginTop: 50,
+		marginTop: 20,
 		width: '80%'
 	},
 	profileProperty: {
 		marginBottom: 25,
-		width: '100%'
+		width: '100%',
+		alignItems: 'center'
 	},
 	profilePropertyName: {
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		fontSize: 20
 	},
 	buttonsContainer: {
 		alignItems: 'center',
@@ -134,6 +136,8 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		margin: 5,
-		fontSize: 15
+		fontSize: 20,
+		width: 300,
+		height: 60
 	}
 })

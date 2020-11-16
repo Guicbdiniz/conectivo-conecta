@@ -1,3 +1,5 @@
+import { Trabalhador } from './TrabalhadorTypes'
+
 /**
  * Vaga model's interface.
  */
@@ -9,6 +11,7 @@ export interface Vaga {
 	salario: Number
 	categoria: String
 	localizacao: String
+	trabalhadores?: Trabalhador[]
 }
 
 /**

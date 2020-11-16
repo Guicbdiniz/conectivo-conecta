@@ -77,6 +77,71 @@ export async function getVagasFromCnpj(cnpj, token) {
 		return data.vagas
 	} catch (err) {
 		console.log(err.response)
-		throw err
+		throw 'Houve um erro ao tentar adquirir as vagas do seu perfil.'
+	}
+}
+
+/**
+ * Make a GET request to the API to get all the trabalhadores related to the passed vaga id.
+ *
+ * Returns a array of trabalhador objects.
+ */
+export async function getAllTrabalhadoresFromVaga(vagaId, token) {
+	try {
+		const { data } = await axios({
+			method: 'get',
+			url: '/trabalhador/fromvaga/' + vagaId,
+			headers: {
+				Authorization: token
+			}
+		})
+
+		return data.trabalhadores
+	} catch (err) {
+		console.log(err.response)
+		throw 'Houve um erro ao tentar adquirir as vagas do seu perfil.'
+	}
+}
+
+/**
+ * Make a DELETE request to the API to delete the vaga with the passed id.
+ */
+export async function deleteVaga(vagaId, token) {
+	try {
+		const { data } = await axios({
+			method: 'delete',
+			url: '/vaga/' + vagaId,
+			headers: {
+				Authorization: token
+			}
+		})
+
+		return
+	} catch (err) {
+		console.log(err.response)
+		throw 'Houve um erro ao tentar deletar a vaga.'
+	}
+}
+
+/**
+ * Make a PUT request to the API to edit the vaga with the passed id.
+ */
+export async function editVaga(vagaId, changes, token) {
+	try {
+		const { data } = await axios({
+			method: 'put',
+			url: '/vaga/' + vagaId,
+			headers: {
+				Authorization: token
+			},
+			data: {
+				changes: changes
+			}
+		})
+
+		return data.vaga
+	} catch (err) {
+		console.log(err.response)
+		throw 'Houve um erro ao tentar editar a vaga.'
 	}
 }

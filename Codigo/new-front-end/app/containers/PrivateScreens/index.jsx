@@ -65,15 +65,15 @@ export default function PrivateContainer() {
 				const EmpresaTab = createBottomTabNavigator()
 				return (
 					<EmpresaTab.Navigator
-						initialRouteName="Perfil"
+						initialRouteName="Minhas Vagas"
 						tabBarOptions={tabBarOptions}
 						lazy={false}
 					>
 						<EmpresaTab.Screen
-							name="Perfil"
-							component={EmpresaProfile}
+							name="Minhas Vagas"
+							component={EmpresaFeed}
 							options={{
-								tabBarIcon: getAntDesignIcon('profile')
+								tabBarIcon: getFontAwesomeIcon('feed')
 							}}
 						/>
 						<EmpresaTab.Screen
@@ -84,10 +84,10 @@ export default function PrivateContainer() {
 							}}
 						/>
 						<EmpresaTab.Screen
-							name="Minhas Vagas"
-							component={EmpresaFeed}
+							name="Perfil"
+							component={EmpresaProfile}
 							options={{
-								tabBarIcon: getFontAwesomeIcon('feed')
+								tabBarIcon: getAntDesignIcon('profile')
 							}}
 						/>
 					</EmpresaTab.Navigator>
