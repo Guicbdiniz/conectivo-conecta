@@ -11,20 +11,20 @@ import AppButton from '../../../components/AppButton'
 /**
  * Component to select witch type of account will be registered.
  */
-export default function SelectAccoutTypeForm({ setAccoutType }) {
+export default function SelectAccoutTypeForm({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>Escolha o tipo de conta a ser criada:</Text>
 
 			<AppButton
 				title="Trabalhador"
-				onPress={() => setAccoutType('TRABALHADOR')}
+				onPress={() => navigation.navigate('Registro de Trabalhador')}
 				margin={10}
 				fontSize={30}
 			/>
 			<AppButton
 				title="Empresa"
-				onPress={() => setAccoutType('EMPRESA')}
+				onPress={() => navigation.navigate('Registro de Empresa')}
 				margin={30}
 				fontSize={30}
 			/>

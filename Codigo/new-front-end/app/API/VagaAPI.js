@@ -77,6 +77,28 @@ export async function getVagasFromCnpj(cnpj, token) {
 		return data.vagas
 	} catch (err) {
 		console.log(err.response)
-		throw err
+		throw 'Houve um erro ao tentar adquirir as vagas do seu perfil.'
+	}
+}
+
+/**
+ * Make a GET request to the API to get all the trabalhadores related to the passed vaga id.
+ *
+ * Returns a array of trabalhador objects.
+ */
+export async function getAllTrabalhadoresFromVaga(vagaId, token) {
+	try {
+		const { data } = await axios({
+			method: 'get',
+			url: '/trabalhador/fromvaga/' + vagaId,
+			headers: {
+				Authorization: token
+			}
+		})
+
+		return data.trabalhadores
+	} catch (err) {
+		console.log(err.response)
+		throw 'Houve um erro ao tentar adquirir as vagas do seu perfil.'
 	}
 }
