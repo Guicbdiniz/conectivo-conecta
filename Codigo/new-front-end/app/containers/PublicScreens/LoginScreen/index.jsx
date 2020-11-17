@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { Button, StyleSheet, Text, TextInput, View, Alert } from 'react-native'
-import { loginTrabalhador } from '../../../API/TrabalhadorAPI'
+import { getTrabalhador, loginTrabalhador } from '../../../API/TrabalhadorAPI'
 import AppButton from '../../../components/AppButton'
 import AppTextInput from '../../../components/AppTextInput'
 import AppPicker from '../../../components/AppPicker'
 import { DispatchContext } from '../../../contexts'
-import { loginEmpresa } from '../../../API/EmpresaAPI'
+import { getEmpresa, loginEmpresa } from '../../../API/EmpresaAPI'
+import { getVagasFromCnpj } from '../../../API/VagaAPI'
 
 export default function LoginScreen({ navigation }) {
 	const [email, setEmail] = useState('')
@@ -28,12 +29,20 @@ export default function LoginScreen({ navigation }) {
 			if (accountType === 'TRABALHADOR') {
 				loginTrabalhador(email, password)
 					.then(({ message, token }) => {
-						dispatch({
-							type: 'logIn',
-							userType: 'TRABALHADOR',
-							userEmail: email,
-							authToken: token
-						})
+						getTrabalhador(email, token)
+							.then((trabalhador) => {
+								dispatch({
+									type: 'logIn',
+									userType: 'TRABALHADOR',
+									userEmail: email,
+									authToken: token,
+									userData: trabalhador,
+									vagasData: []
+								})
+							})
+							.catch((err) => {
+								throw err
+							})
 					})
 					.catch((err) => {
 						Alert.alert('Erro ao fazer login', err, [{ text: 'Ok' }])
@@ -42,12 +51,26 @@ export default function LoginScreen({ navigation }) {
 			if (accountType === 'EMPRESA') {
 				loginEmpresa(email, password)
 					.then(({ message, token }) => {
-						dispatch({
-							type: 'logIn',
-							userType: 'EMPRESA',
-							userEmail: email,
-							authToken: token
-						})
+						getEmpresa(email, token)
+							.then((empresa) => {
+								getVagasFromCnpj(empresa.cnpj, token)
+									.then((vagas) => {
+										dispatch({
+											type: 'logIn',
+											userType: 'EMPRESA',
+											userEmail: email,
+											authToken: token,
+											userData: empresa,
+											vagasData: vagas
+										})
+									})
+									.catch((err) => {
+										throw err
+									})
+							})
+							.catch((err) => {
+								throw err
+							})
 					})
 					.catch((err) => {
 						Alert.alert('Erro ao fazer login', err, [{ text: 'Ok' }])

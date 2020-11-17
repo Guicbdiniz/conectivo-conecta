@@ -7,13 +7,15 @@ export default function AppButton({
 	title,
 	margin,
 	fontSize,
-	backgroundColor
+	backgroundColor,
+	style
 }) {
 	function getContainerStyle() {
 		return [
 			styles.appButtonContainer,
 			margin && { margin },
-			backgroundColor && { backgroundColor }
+			backgroundColor && { backgroundColor },
+			style
 		]
 	}
 

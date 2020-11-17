@@ -5,8 +5,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import TrabalhadorProfile from './Trabalhador/TrabalhadorProfile'
 import TrabalhadorFeed from './Trabalhador/TrabalhadorFeed'
 import { AntDesign, FontAwesome } from '@expo/vector-icons'
+import EmpresaProfile from './Empresa/EmpresaProfile'
+import EmpresaNewJob from './Empresa/EmpresaNewJob'
+import EmpresaFeed from './Empresa/EmpresaFeed'
 
-const ICONS_SIZE = 60
+const ICONS_SIZE = 30
 const ICONS_COLOR_NOT_ACTIVE = 'black'
 const ICONS_COLOR_ACTIVE = '#009688'
 
@@ -15,25 +18,21 @@ export default function PrivateContainer() {
 	const { userType } = state
 
 	const tabBarOptions = {
-		style: { height: 100 },
+		style: { height: 60 },
 		activeTintColor: ICONS_COLOR_ACTIVE,
 		inactiveTintColor: ICONS_COLOR_NOT_ACTIVE,
-		labelStyle: { fontSize: 20, fontWeight: 'bold' }
+		labelStyle: { fontSize: 14, fontWeight: 'bold' }
 	}
 
 	function getAntDesignIcon(name) {
-		return (focused, color, size) => (
-			<AntDesign name={name} size={ICONS_SIZE} color={ICONS_COLOR_NOT_ACTIVE} />
+		return ({ focused, color, size }) => (
+			<AntDesign name={name} size={ICONS_SIZE} color={color} />
 		)
 	}
 
 	function getFontAwesomeIcon(name) {
-		return (focused, color, size) => (
-			<FontAwesome
-				name={name}
-				size={ICONS_SIZE}
-				color={ICONS_COLOR_NOT_ACTIVE}
-			/>
+		return ({ focused, color }) => (
+			<FontAwesome name={name} size={ICONS_SIZE} color={color} />
 		)
 	}
 
@@ -66,12 +65,27 @@ export default function PrivateContainer() {
 				const EmpresaTab = createBottomTabNavigator()
 				return (
 					<EmpresaTab.Navigator
-						initialRouteName="Profile"
+						initialRouteName="Minhas Vagas"
 						tabBarOptions={tabBarOptions}
+						lazy={false}
 					>
 						<EmpresaTab.Screen
-							name="Profile"
-							component={TrabalhadorProfile}
+							name="Minhas Vagas"
+							component={EmpresaFeed}
+							options={{
+								tabBarIcon: getFontAwesomeIcon('feed')
+							}}
+						/>
+						<EmpresaTab.Screen
+							name="Nova Vaga"
+							component={EmpresaNewJob}
+							options={{
+								tabBarIcon: getAntDesignIcon('pluscircleo')
+							}}
+						/>
+						<EmpresaTab.Screen
+							name="Perfil"
+							component={EmpresaProfile}
 							options={{
 								tabBarIcon: getAntDesignIcon('profile')
 							}}
@@ -86,6 +100,6 @@ export default function PrivateContainer() {
 
 const styles = StyleSheet.create({
 	tabContainer: {
-		height: 100
+		height: 80
 	}
 })

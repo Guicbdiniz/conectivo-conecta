@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Text, Alert } from 'react-native'
-import TrabalhadorProfileNotEdiatable from './TrabalhadorProfileNotEditable'
-import TrabalhadorProfileEditable from './TrabalhadorProfileEditable'
+import EmpresaValidatedProfileNotEditable from './EmpresaValidatedProfileNotEditable'
+import EmpresaValidatedProfileEditable from './EmpresaValidatedProfileEditable'
 
-export default function TrabalhadorProfile({}) {
+export default function EmpresaValidatedProfile({}) {
 	const [beingEdited, setBeingEdited] = useState(false)
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>Seu Perfil</Text>
 			{beingEdited ? (
-				<TrabalhadorProfileEditable setBeingEdited={setBeingEdited} />
+				<EmpresaValidatedProfileEditable setBeingEdited={setBeingEdited} />
 			) : (
-				<TrabalhadorProfileNotEdiatable setBeingEdited={setBeingEdited} />
+				<EmpresaValidatedProfileNotEditable setBeingEdited={setBeingEdited} />
 			)}
 		</View>
 	)
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontSize: 50,
 		marginTop: 60,
-		marginBottom: 30,
+		marginBottom: 45,
 		color: '#009688'
 	}
 })

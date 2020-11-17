@@ -7,14 +7,16 @@ export default function AppNumericInput({
 	setValue,
 	style,
 	maxLength,
-	onEndEditing
+	onEndEditing,
+	selectTextOnFocus,
+	editable
 }) {
 	function getNumericInputStyles() {
 		return [styles.textInput, style]
 	}
 
 	function getTextWithOnlyNumbers(text) {
-		return text.replace(/[^0-9]/g, '')
+		return text.replace(/[^0-9.]/g, '')
 	}
 
 	return (
@@ -27,6 +29,8 @@ export default function AppNumericInput({
 			maxLength={maxLength ? maxLength : 50}
 			keyboardType="numeric"
 			onEndEditing={onEndEditing ? onEndEditing : null}
+			selectTextOnFocus={selectTextOnFocus ? selectTextOnFocus : true}
+			editable={editable ? editable : true}
 		/>
 	)
 }

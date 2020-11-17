@@ -146,7 +146,7 @@ export function selectAllTrabalhadoresFromInscricao(idDaVaga: Number) {
 					idDaVaga +
 					' getted!'
 			)
-			resolve(idDaVaga)
+			resolve(res)
 		})
 	})
 }

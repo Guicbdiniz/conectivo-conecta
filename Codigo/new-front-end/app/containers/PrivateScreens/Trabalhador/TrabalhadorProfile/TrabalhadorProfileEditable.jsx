@@ -6,12 +6,14 @@ import AppNumericInput from '../../../../components/AppNumericInput'
 import AppDateInput from '../../../../components/AppDateInput'
 import AppPicker from '../../../../components/AppPicker'
 import { editTrabalhador } from '../../../../API/TrabalhadorAPI'
-import { StateContext } from '../../../../contexts'
+import { StateContext, DispatchContext } from '../../../../contexts'
 
-export default function TrabalhadorProfileEditable({
-	trabalhadorInitialData,
-	setBeingEdited
-}) {
+export default function TrabalhadorProfileEditable({ setBeingEdited }) {
+	const dispatch = useContext(DispatchContext)
+	const state = useContext(StateContext)
+	const { userData: trabalhadorInitialData } = state
+	const [changes, setChanges] = useState({})
+
 	const [nomeCompleto, setNomeCompleto] = useState(
 		trabalhadorInitialData.nomeCompleto
 	)
@@ -47,9 +49,6 @@ export default function TrabalhadorProfileEditable({
 		trabalhadorInitialData.resumoProfissional
 	)
 
-	const [changes, setChanges] = useState({})
-	const state = useContext(StateContext)
-
 	function handlePropertyOnEndEditing(propertyName, value) {
 		return () => {
 			setChanges((oldChanges) => {
@@ -60,15 +59,17 @@ export default function TrabalhadorProfileEditable({
 
 	function submitChanges() {
 		editTrabalhador(changes, state.userEmail, state.authToken)
-			.then((data) => {
+			.then((trabalhador) => {
+				dispatch({
+					type: 'editUserData',
+					userData: trabalhador
+				})
 				setBeingEdited(false)
 			})
 			.catch((err) => {
-				Alert.alert(
-					'Erro',
-					'Houve um erro de conexão ao deletar o seu perfil',
-					[{ text: 'Ok' }]
-				)
+				Alert.alert('Erro', 'Houve um erro de conexão ao editar o seu perfil', [
+					{ text: 'Ok' }
+				])
 			})
 	}
 

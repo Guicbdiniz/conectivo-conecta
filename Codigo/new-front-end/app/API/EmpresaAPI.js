@@ -70,3 +70,70 @@ export async function loginEmpresa(email, senha) {
 		}
 	}
 }
+
+/**
+ * Make a GET request to the API to get the empresa with the passed email.
+ *
+ * Returns a empresa object.
+ */
+export async function getEmpresa(email, token) {
+	try {
+		const { data } = await axios({
+			method: 'get',
+			url: '/empresa/' + email,
+			headers: {
+				Authorization: token
+			}
+		})
+
+		return data.empresa
+	} catch (err) {
+		console.log(err.response)
+		throw err
+	}
+}
+
+/**
+ * Make a DELETE request to the API to get the empresa with the passed email.
+ */
+export async function deleteEmpresa(email, token) {
+	try {
+		const { data } = await axios({
+			method: 'delete',
+			url: '/empresa/' + email,
+			headers: {
+				Authorization: token
+			}
+		})
+
+		return data.empresa
+	} catch (err) {
+		console.log(token)
+		console.log(err.response)
+		throw err
+	}
+}
+
+/**
+ * Make a PUT request to the API to edit the empresa with the passed email.
+ */
+export async function editEmpresa(changes, email, token) {
+	try {
+		const { data } = await axios({
+			method: 'put',
+			url: '/empresa/' + email,
+			headers: {
+				Authorization: token
+			},
+			data: {
+				changes: changes
+			}
+		})
+
+		return data.empresa
+	} catch (err) {
+		console.log(token)
+		console.log(err.response)
+		throw err
+	}
+}

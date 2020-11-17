@@ -14,7 +14,7 @@ export function insertVaga(vaga: Vaga): Promise<Vaga> {
 				return reject(err)
 			}
 
-			console.log('New vaag was created!\n', vaga)
+			console.log('New vaga was created!\n', vaga)
 			resolve(vaga)
 		})
 	})
