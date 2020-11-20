@@ -293,12 +293,14 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		margin: 5,
-		fontSize: 15
+		fontSize: 15,
+		width: '90%'
 	},
 	longInput: {
 		margin: 5,
 		fontSize: 15,
 		height: 150,
-		textAlignVertical: 'top'
+		textAlignVertical: 'top',
+		width: '90%'
 	}
 })
