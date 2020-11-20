@@ -6,7 +6,11 @@ import AppTextInput from '../../../components/AppTextInput'
 import AppPicker from '../../../components/AppPicker'
 import { DispatchContext } from '../../../contexts'
 import { getEmpresa, loginEmpresa } from '../../../API/EmpresaAPI'
-import { getVagasFromCnpj } from '../../../API/VagaAPI'
+import {
+	getAllVagas,
+	getVagasFromCnpj,
+	getVagasIdsRelatedToTrabalhador
+} from '../../../API/VagaAPI'
 
 export default function LoginScreen({ navigation }) {
 	const [email, setEmail] = useState('')
@@ -20,32 +24,44 @@ export default function LoginScreen({ navigation }) {
 
 	function handleLoginSubmit() {
 		if (!(email && password && accountType)) {
-			Alert.alert(
-				'Erro ao fazer login',
-				'Preencha todos os dados corretamente!',
-				[{ text: 'Ok' }]
-			)
+			printErrorMessage('Preencha todos os dados corretamente!')
 		} else {
 			if (accountType === 'TRABALHADOR') {
 				loginTrabalhador(email, password)
 					.then(({ message, token }) => {
 						getTrabalhador(email, token)
 							.then((trabalhador) => {
-								dispatch({
-									type: 'logIn',
-									userType: 'TRABALHADOR',
-									userEmail: email,
-									authToken: token,
-									userData: trabalhador,
-									vagasData: []
-								})
+								getAllVagas(token)
+									.then((vagas) => {
+										getVagasIdsRelatedToTrabalhador(trabalhador.cpf, token)
+											.then((vagasIds) => {
+												const vagasIdsAsNumberArray = vagasIds.map(
+													(vagaIdObj) => vagaIdObj.id
+												)
+												dispatch({
+													type: 'logIn',
+													userType: 'TRABALHADOR',
+													userEmail: email,
+													authToken: token,
+													userData: trabalhador,
+													vagasData: vagas,
+													subscribedVagasIds: vagasIdsAsNumberArray
+												})
+											})
+											.catch((err) => {
+												printErrorMessage(err)
+											})
+									})
+									.catch((err) => {
+										printErrorMessage(err)
+									})
 							})
 							.catch((err) => {
-								throw err
+								printErrorMessage(err)
 							})
 					})
 					.catch((err) => {
-						Alert.alert('Erro ao fazer login', err, [{ text: 'Ok' }])
+						printErrorMessage(err)
 					})
 			}
 			if (accountType === 'EMPRESA') {
@@ -61,22 +77,27 @@ export default function LoginScreen({ navigation }) {
 											userEmail: email,
 											authToken: token,
 											userData: empresa,
-											vagasData: vagas
+											vagasData: vagas,
+											subscribedVagasIds: []
 										})
 									})
 									.catch((err) => {
-										throw err
+										printErrorMessage(err)
 									})
 							})
 							.catch((err) => {
-								throw err
+								printErrorMessage(err)
 							})
 					})
 					.catch((err) => {
-						Alert.alert('Erro ao fazer login', err, [{ text: 'Ok' }])
+						printErrorMessage(err)
 					})
 			}
 		}
+	}
+
+	function printErrorMessage(message) {
+		Alert.alert('Erro ao fazer login', message, [{ text: 'Ok' }])
 	}
 
 	return (

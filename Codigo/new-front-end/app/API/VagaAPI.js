@@ -145,3 +145,67 @@ export async function editVaga(vagaId, changes, token) {
 		throw 'Houve um erro ao tentar editar a vaga.'
 	}
 }
+
+/**
+ * Make a GET request to the API to get all the avaiable vagas.
+ */
+export async function getAllVagas(token) {
+	try {
+		const { data } = await axios({
+			method: 'get',
+			url: '/vaga/',
+			headers: {
+				Authorization: token
+			}
+		})
+
+		return data.vagas
+	} catch (err) {
+		console.log(err.response)
+		throw 'Houve um erro ao tentar adquirir as vagas disponíveis.'
+	}
+}
+
+/**
+ *  Make a GET request to the API to get all the vagas Ids related to the trabalhador with the passed cpf.
+ */
+export async function getVagasIdsRelatedToTrabalhador(cpf, token) {
+	try {
+		const { data } = await axios({
+			method: 'get',
+			url: '/trabalhador/vagas/' + cpf,
+			headers: {
+				Authorization: token
+			}
+		})
+
+		return data.vagasIds
+	} catch (err) {
+		console.log(err.response)
+		throw 'Houve um erro ao tentar adquirir as vagas em que você está inscrito.'
+	}
+}
+
+/**
+ * Make a POST request to the API to add a inscricao to conect a trabalhador to a vaga.
+ */
+export async function subscribeTrabalhadorToVaga(vagaId, cpf, token) {
+	try {
+		const { data } = await axios({
+			method: 'post',
+			url: '/inscricao/',
+			headers: {
+				Authorization: token
+			},
+			data: {
+				idDaVaga: vagaId,
+				cpfTrabalhador: cpf
+			}
+		})
+
+		return
+	} catch (err) {
+		console.log(err.response)
+		throw 'Houve um erro ao tentar fazer a inscrição para a vaga.'
+	}
+}

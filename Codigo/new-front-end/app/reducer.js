@@ -7,7 +7,8 @@ export const initialState = {
 	userEmail: '',
 	authToken: '',
 	userData: {},
-	vagasData: []
+	vagasData: [],
+	subscribedVagasIds: []
 }
 
 /**
@@ -25,7 +26,14 @@ export const UserLoggedTypes = {
 export function reducer(state, action) {
 	switch (action.type) {
 		case 'logIn':
-			let { userType, userEmail, authToken, userData, vagasData } = action
+			let {
+				userType,
+				userEmail,
+				authToken,
+				userData,
+				vagasData,
+				subscribedVagasIds
+			} = action
 
 			return {
 				...state,
@@ -34,7 +42,8 @@ export function reducer(state, action) {
 				userEmail: userEmail,
 				authToken: authToken,
 				userData: userData,
-				vagasData: vagasData
+				vagasData: vagasData,
+				subscribedVagasIds: subscribedVagasIds
 			}
 
 		case 'logOut':
@@ -44,7 +53,9 @@ export function reducer(state, action) {
 				userType: UserLoggedTypes.NONE,
 				userEmail: '',
 				authToken: '',
-				userData: {}
+				userData: {},
+				vagasData: [],
+				subscribedVagasIds: []
 			}
 
 		case 'editUserData':
@@ -88,6 +99,14 @@ export function reducer(state, action) {
 			return {
 				...state,
 				vagasData: vagas
+			}
+		case 'subscribeToVaga':
+			const vagaSubscribedId = action.vagaId
+			const vagasSubscribedIds = [...state.subscribedVagasIds, vagaSubscribedId]
+
+			return {
+				...state,
+				subscribedVagasIds: vagasSubscribedIds
 			}
 	}
 }
