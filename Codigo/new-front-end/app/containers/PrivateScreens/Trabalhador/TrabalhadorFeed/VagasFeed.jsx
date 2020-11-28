@@ -14,7 +14,7 @@ export default function VagasFeed({ navigation, route }) {
 	} = useContext(StateContext)
 
 	function getAllVagasAsComponents() {
-		if (vagas.length > 1) {
+		if (vagas.length >= 1) {
 			return vagas.map((vaga, index, array) => {
 				const subscribed = subscribedVagasIds.includes(vaga.id)
 
