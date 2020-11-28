@@ -14,7 +14,7 @@ export default function VagaMinimized({ vaga, navigation }) {
 					{vaga.titulo}
 				</Text>
 				<Text style={styles.infoText}>
-					<Text style={{ fontWeight: 'bold' }}>Catergoria: </Text>
+					<Text style={{ fontWeight: 'bold' }}>Categoria: </Text>
 					{vaga.categoria}
 				</Text>
 			</View>

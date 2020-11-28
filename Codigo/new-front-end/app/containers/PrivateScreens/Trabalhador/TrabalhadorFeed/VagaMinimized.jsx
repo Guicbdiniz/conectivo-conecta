@@ -15,8 +15,8 @@ export default function VagaMinimized({
 				{subscribed ? (
 					<Text style={styles.subscriptionText}>Inscrito</Text>
 				) : (
-					<></>
-				)}
+						<></>
+					)}
 			</View>
 			<View style={styles.infoView}>
 				<Text style={styles.infoText}>
@@ -24,7 +24,7 @@ export default function VagaMinimized({
 					{vaga.titulo}
 				</Text>
 				<Text style={styles.infoText}>
-					<Text style={{ fontWeight: 'bold' }}>Catergoria: </Text>
+					<Text style={{ fontWeight: 'bold' }}>Categoria: </Text>
 					{vaga.categoria}
 				</Text>
 			</View>
