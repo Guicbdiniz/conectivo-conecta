@@ -87,8 +87,7 @@ CREATE TABLE IF NOT EXISTS \`inscricaoVagaTrabalhador\` (
   CONSTRAINT \`fk_inscricao_trabalhador\` FOREIGN KEY (\`cpfTrabalhador\`)
       REFERENCES \`trabalhador\` (\`cpf\`)
       ON DELETE CASCADE
-);
-`
+);`
 
 /**
  * Middleware to check if the 'conectivo_conecta_db' exists along with all of its tables.
