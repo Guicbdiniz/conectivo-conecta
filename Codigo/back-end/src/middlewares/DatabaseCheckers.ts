@@ -58,7 +58,37 @@ CREATE TABLE IF NOT EXISTS \`trabalhador\` (
   PRIMARY KEY (\`cpf\`),
   KEY \`fk_trabalhador_conta_idx\` (\`email\`),
   CONSTRAINT \`fk_trabalhador_conta\` FOREIGN KEY (\`email\`) REFERENCES \`conta\` (\`email\`) ON DELETE CASCADE ON UPDATE CASCADE
-);`
+);
+
+CREATE TABLE IF NOT EXISTS \`vaga\` (
+  \`cnpjDaEmpresa\` CHAR(14) DEFAULT NULL,
+  \`id\` INT NOT NULL AUTO_INCREMENT,
+  \`titulo\` VARCHAR(50) NOT NULL,
+  \`descricao\` VARCHAR(1024) NOT NULL,
+  \`salario\` FLOAT NOT NULL,
+  \`categoria\` VARCHAR(30),
+  \`localizacao\` VARCHAR(30),
+  PRIMARY KEY (\`id\`),
+  KEY \`fk_vaga_empresa_idx\` (\`cnpjDaEmpresa\`),
+  CONSTRAINT \`fk_vaga_empresa\` FOREIGN KEY (\`cnpjDaEmpresa\`)
+      REFERENCES \`empresa\` (\`cnpj\`)
+      ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS \`inscricaoVagaTrabalhador\` (
+  \`idDaVaga\` INT NOT NULL,
+  \`cpfTrabalhador\` VARCHAR(12) NOT NULL,
+  PRIMARY KEY (\`idDaVaga\` , \`cpfTrabalhador\`),
+  KEY \`fk_inscricao_vaga_idx\` (\`idDaVaga\`),
+  KEY \`fk_inscricao_trabalhador_idx\` (\`cpfTrabalhador\`),
+  CONSTRAINT \`fk_inscricao_vaga\` FOREIGN KEY (\`idDaVaga\`)
+      REFERENCES \`vaga\` (\`id\`)
+      ON DELETE CASCADE,
+  CONSTRAINT \`fk_inscricao_trabalhador\` FOREIGN KEY (\`cpfTrabalhador\`)
+      REFERENCES \`trabalhador\` (\`cpf\`)
+      ON DELETE CASCADE
+);
+`
 
 /**
  * Middleware to check if the 'conectivo_conecta_db' exists along with all of its tables.
