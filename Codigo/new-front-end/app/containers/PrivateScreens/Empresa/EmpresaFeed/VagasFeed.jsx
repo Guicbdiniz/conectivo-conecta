@@ -39,7 +39,7 @@ export default function VagasFeed({ navigation }) {
 				</TouchableOpacity>
 			)
 		}
-		if (vagas.length > 1) {
+		if (vagas.length >= 1) {
 			return vagas.map((vaga, index, array) => (
 				<VagaMinimized vaga={vaga} key={vaga.id} navigation={navigation} />
 			))
