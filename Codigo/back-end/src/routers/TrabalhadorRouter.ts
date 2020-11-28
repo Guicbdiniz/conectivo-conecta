@@ -6,7 +6,8 @@ import {
 	deleteTrabalhador,
 	getAllTrabalhadores,
 	editTrabalhador,
-	getAllTrabalhadoresFromVaga
+	getAllTrabalhadoresFromVaga,
+	getAllVagasIdFromTrabalhador
 } from '../controllers/TrabalhadorController'
 import { authenticateJWTToken } from '../middlewares/TokenAuth'
 
@@ -24,5 +25,6 @@ router.get(
 	authenticateJWTToken,
 	getAllTrabalhadoresFromVaga
 )
+router.get('/vagas/:cpf', authenticateJWTToken, getAllVagasIdFromTrabalhador)
 
 export default router

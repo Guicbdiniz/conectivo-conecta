@@ -5,7 +5,8 @@ import {
 	selectByEmail,
 	removeTrabalhador,
 	updateTrabalhador,
-	selectAllTrabalhadoresFromInscricao
+	selectAllTrabalhadoresFromInscricao,
+	selectAllVagasIdFromTrabalhador
 } from '../models/TrabalhadorModel'
 import { insertConta, selectContaByEmail } from '../models/ContaModel'
 import { Trabalhador, TrabalhadorChanges } from '../types/TrabalhadorTypes'
@@ -219,6 +220,41 @@ export async function getAllTrabalhadoresFromVaga(req: Request, res: Response) {
 			message:
 				'Trabalhadores from vaga with id ' + idDaVaga + ' getted with success!',
 			trabalhadores: allTrabalhadoresFromVaga
+		})
+	} catch (err) {
+		res.status(500).json({
+			message: 'Error: ' + err
+		})
+	}
+}
+
+/**
+ * Get all Vagas ids related to Trabalhador controller.
+ */
+export async function getAllVagasIdFromTrabalhador(
+	req: Request,
+	res: Response
+) {
+	try {
+		const { cpf } = req.params
+		if (!cpf) {
+			res.status(400).json({
+				message: 'No cpf from trabalhador was found!'
+			})
+		}
+
+		const cpfAsNumber = parseInt(cpf)
+
+		const allVagasIds = (await selectAllVagasIdFromTrabalhador(
+			cpfAsNumber
+		)) as Number[]
+
+		res.status(200).json({
+			message:
+				'Vagas ids from trabalhador with cpf ' +
+				cpfAsNumber +
+				' getted with success!',
+			vagasIds: allVagasIds
 		})
 	} catch (err) {
 		res.status(500).json({

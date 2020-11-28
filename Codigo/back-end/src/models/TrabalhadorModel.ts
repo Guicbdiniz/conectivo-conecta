@@ -150,3 +150,28 @@ export function selectAllTrabalhadoresFromInscricao(idDaVaga: Number) {
 		})
 	})
 }
+
+/**
+ * Select from DB all vagas  related to a inscricao from the trabalhador with the specified cpf.
+ */
+export function selectAllVagasIdFromTrabalhador(cpf: Number) {
+	return new Promise(function (resolve, reject) {
+		const queryString =
+			'SELECT V.id FROM `trabalhador` T, `vaga` V, `inscricaovagatrabalhador` I WHERE ' +
+			'(T.cpf = I.cpfTrabalhador) AND (I.idDaVaga = V.id) AND (T.cpf = ?)'
+
+		sql.query(queryString, [cpf], function (err, res) {
+			if (err) {
+				console.log('DB error: ', err)
+				return reject(err)
+			}
+
+			console.log(
+				'All vagas ids from inscricao from trabalhador with cpf ' +
+					cpf +
+					' getted!'
+			)
+			resolve(res)
+		})
+	})
+}
