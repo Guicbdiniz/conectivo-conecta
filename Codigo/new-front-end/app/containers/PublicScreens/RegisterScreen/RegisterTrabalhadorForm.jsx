@@ -235,7 +235,7 @@ export default function RegisterTrabalhadorForm() {
 					value={objetivoProfissional}
 					onChangeText={(text) => setObjetivoProfissional(text)}
 					style={styles.longTextInput}
-					maxLength={300}
+					maxLength={30000}
 					multiline={true}
 				/>
 				<Text style={styles.textLabel}>Resumo Profissional*</Text>
@@ -243,7 +243,7 @@ export default function RegisterTrabalhadorForm() {
 					value={resumoProfissional}
 					onChangeText={(text) => setResumoProfissional(text)}
 					style={styles.longTextInput}
-					maxLength={300}
+					maxLength={30000}
 					multiline={true}
 				/>
 				<Text style={styles.textLabel}>Email*</Text>

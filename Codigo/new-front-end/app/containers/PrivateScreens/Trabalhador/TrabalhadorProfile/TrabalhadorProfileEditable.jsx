@@ -243,7 +243,7 @@ export default function TrabalhadorProfileEditable({ setBeingEdited }) {
 						'objetivoProfissional',
 						objetivoProfissional
 					)}
-					maxLength={300}
+					maxLength={30000}
 					multiline={true}
 				/>
 			</View>
@@ -257,7 +257,7 @@ export default function TrabalhadorProfileEditable({ setBeingEdited }) {
 						'resumoProfissional',
 						resumoProfissional
 					)}
-					maxLength={300}
+					maxLength={30000}
 					multiline={true}
 				/>
 			</View>
