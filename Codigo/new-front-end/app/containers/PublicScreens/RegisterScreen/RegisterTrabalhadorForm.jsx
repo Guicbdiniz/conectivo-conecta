@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Alert, StyleSheet, Text, View, Picker } from 'react-native'
+import { Alert, StyleSheet, Text, View, Picker, Linking } from 'react-native'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import { createTrabalhador } from '../../../API/TrabalhadorAPI'
 import AppButton from '../../../components/AppButton'
@@ -269,6 +269,13 @@ export default function RegisterTrabalhadorForm() {
 					maxLength={15}
 					secureTextEntry={true}
 				/>
+				<View style={styles.container}>
+				<Text style={styles.termos}>Ao criar a conta, você concorda com os termos e compromisos presentes em:</Text>
+				<Text style={{color: 'blue', textDecorationStyle: "underline"}}
+      				onPress={() => Linking.openURL('https://conectivoc.wixsite.com/conecta')}>
+  				https://conectivoc.wixsite.com/conecta
+				</Text>
+				</View>
 				<AppButton
 					title="Registrar"
 					onPress={handleRegisterSubmit}
@@ -310,5 +317,9 @@ const styles = StyleSheet.create({
 		height: 150,
 		fontSize: 20,
 		textAlignVertical: 'top'
+	},
+	termos: {
+		color: "gray",
+		textAlign: 'center',	
 	}
 })

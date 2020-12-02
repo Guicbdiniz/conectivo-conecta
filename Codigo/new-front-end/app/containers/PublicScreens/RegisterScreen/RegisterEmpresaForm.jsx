@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View, Linking } from 'react-native'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import AppButton from '../../../components/AppButton'
 import AppTextInput from '../../../components/AppTextInput'
@@ -139,11 +139,19 @@ export default function RegisterEmpresaForm() {
 					maxLength={15}
 					secureTextEntry={true}
 				/>
+				<View style={styles.container}>
+				<Text style={styles.termos}>Ao criar a conta, você concorda com os termos e compromisos presentes em:</Text>
+				<Text style={{color: 'blue', textDecorationStyle: "underline"}}
+      				onPress={() => Linking.openURL('https://conectivoc.wixsite.com/conecta')}>
+  				https://conectivoc.wixsite.com/conecta
+				</Text>
+				</View>
 				<AppButton
 					title="Registrar"
 					onPress={handleRegisterSubmit}
 					margin={10}
 				/>
+				
 			</ScrollView>
 		</View>
 	)
@@ -168,5 +176,9 @@ const styles = StyleSheet.create({
 	},
 	textLabel: {
 		fontSize: 20
+	},
+	termos: {
+		color: "gray",
+		textAlign: 'center',	
 	}
 })
